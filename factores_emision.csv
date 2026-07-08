@@ -1,0 +1,5 @@
+Gas,Fuente,Factor_kg_TJ,GWP100_kgCO2eq_kg
+CH4,Biomasa sólida,30.0,21
+CH4,Biogás,1.0,21
+N2O,Biomasa sólida,4.0,310
+N2O,Biogás,0.1,310

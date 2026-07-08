@@ -1,0 +1,53 @@
+Parametro,Unidad,Etapa
+Capacidad de procesamiento,tRFF∙h-1,General
+Fruto procesado ,tRFF∙año-1,General
+Horas de operación,h∙año-1,General
+Tasa de extracción aceite,% ACP∙tRFF-1,General
+Aceite crudo producido,tACP∙año-1,General
+PKO producido,tPKO∙año-1,General
+Humedad PKO,%,General
+Vapor de esterilización,kgvapor∙h-1,Esterilización
+Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización
+Deshidratación del fruto ,%,Esterilización
+Condensados de esterilización,kg∙tRFF∙h-1,Esterilización
+Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización
+Vapor evaporador, ,Esterilización
+Vapor evaporador (específico por tRFF),por tRFF procesado,Esterilización
+Raquis vacío ,kg∙tRFF∙h-1,Desfrutado
+Humedad raquis,%,Desfrutado
+Masa que pasa por digestor,MPD∙tRFF∙h-1,Desfrutado
+Humedad MPD,%,Desfrutado
+Vapor de digestión,kgvapor∙h-1,Digestión y prensado
+Licor de prensa,kgLP∙h-1,Digestión y prensado
+Aceite crudo en LP,%,Digestión y prensado
+Agua en LP,%,Digestión y prensado
+Residuos orgánicos en LP,%,Digestión y prensado
+Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado
+Humedad de mesocarpio,%,Digestión y prensado
+Nueces,tNuez∙año-1,Digestión y prensado
+Humedad de nueces,%,Digestión y prensado
+Agua de dilución,kgagua∙h-1,Clarificación
+Temperatura LP,°C,Clarificación
+Temperatura aceite clarificado,°C,Clarificación
+Aceite clarificado,kgaceite∙h-1,Clarificación
+Vapor de clarificacion,kgvapor∙h-1,Clarificación
+Lodos de clarificación,kgLodos∙h-1,Clarificación
+Agua de recuperación,kgagua∙h-1,Recuperación de aceite
+Aceite recuperado,kgaceite∙h-1,Recuperación de aceite
+Efluente,kgefluente∙h-1,Recuperación de aceite
+Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento
+Temperatura despacho,°C,Almacenamiento
+Vapor de secado,kgvapor∙h-1,Secado de nueces
+Temperatura aire de secado,°C,Flujo de aire de secado
+Humedad de secado,°C,Flujo de aire de secado
+Cuesco,tCuesco∙año-1,Rotura de nuez
+Almendra,tAlmendra∙año-1,Rotura de nuez
+Agua de proceso,kgagua∙año-1,Calentamiento agua proceso
+Temperatura de calentamiento,°C,Calentamiento agua proceso
+Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso
+Fibra en caldera,%,Caldera
+Cuesco en caldera,%,Caldera
+Flujo de vapor,kgvapor∙h-1,Caldera
+Presión de vapor,bar,Caldera
+Temperatura de vapor,°C,Caldera
+Temperatura agua de alimentación,°C,Caldera
