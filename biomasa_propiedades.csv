@@ -6,7 +6,7 @@ EFB,O,(% dry basis),0.3585,4.1
 EFB,N,(% dry basis),0.0058,0.7
 EFB,S,(% dry basis),0.0012,0.4
 EFB,HHV,(kJ/kg),18363.408,2.4
-EFB,LHV,(kJ/kg),6425.13946608,
+EFB,LHV,(kJ/kg),4373.884,
 Fiber,Moisture,(% wet basis),0.35,2.4
 Fiber,C,(% dry basis),0.4531,3.2
 Fiber,H,(% dry basis),0.0611,1.1
@@ -14,7 +14,7 @@ Fiber,O,(% dry basis),0.3227,4.9
 Fiber,N,(% dry basis),0.0102,0.6
 Fiber,S,(% dry basis),0.0017,0.2
 Fiber,HHV,(kJ/kg),19228.173000000003,2.2
-Fiber,LHV,(kJ/kg),12496.589714115002,
+Fiber,LHV,(kJ/kg),10772.17105,
 PKS,Moisture,(% wet basis),0.15,2.1
 PKS,C,(% dry basis),0.4759,3.9
 PKS,H,(% dry basis),0.0565,2.0
@@ -22,7 +22,7 @@ PKS,O,(% dry basis),0.3549,5.1
 PKS,N,(% dry basis),0.0033,0.7
 PKS,S,(% dry basis),0.0007,0.2
 PKS,HHV,(kJ/kg),19108.257,3.1
-PKS,LHV,(kJ/kg),16240.603032025003,
+PKS,LHV,(kJ/kg),14821.389450000002,
 Pressed EFB,Moisture,(% wet basis),0.5,5.1
 Pressed EFB,C,(% dry basis),0.4406,2.5
 Pressed EFB,H,(% dry basis),0.0608,0.7
@@ -30,7 +30,7 @@ Pressed EFB,O,(% dry basis),0.3585,4.1
 Pressed EFB,N,(% dry basis),0.0058,0.7
 Pressed EFB,S,(% dry basis),0.0012,0.4
 Pressed EFB,HHV,(kJ/kg),18363.408,2.4
-Pressed EFB,LHV,(kJ/kg),9179.8180944,
+Pressed EFB,LHV,(kJ/kg),7294.12,
 Dry EFB,Moisture,(% wet basis),0.1,5.1
 Dry EFB,C,(% dry basis),0.4406,2.5
 Dry EFB,H,(% dry basis),0.0608,0.7
@@ -38,4 +38,4 @@ Dry EFB,O,(% dry basis),0.3585,4.1
 Dry EFB,N,(% dry basis),0.0058,0.7
 Dry EFB,S,(% dry basis),0.0012,0.4
 Dry EFB,HHV,(kJ/kg),18363.408,2.4
-Dry EFB,LHV,(kJ/kg),16525.62776992,
+Dry EFB,LHV,(kJ/kg),15081.416000000001,
