@@ -1,311 +1,311 @@
 Parametro,Unidad,Etapa,Planta,Valor
-Capacidad de procesamiento,tRFF∙h-1,General,Planta A,30
-Fruto procesado ,tRFF∙año-1,General,Planta A,153157
-Horas de operación,h∙año-1,General,Planta A,5105
+Capacidad de procesamiento,tRFF∙h-1,General,Planta A,30.0
+Fruto procesado ,tRFF∙año-1,General,Planta A,153157.0
+Horas de operación,h∙año-1,General,Planta A,5105.0
 Tasa de extracción aceite,% ACP∙tRFF-1,General,Planta A,20.71
-Aceite crudo producido,tACP∙año-1,General,Planta A,31719
-PKO producido,tPKO∙año-1,General,Planta A,7636
+Aceite crudo producido,tACP∙año-1,General,Planta A,31719.0
+PKO producido,tPKO∙año-1,General,Planta A,7636.0
 Humedad PKO,%,General,Planta A,6.38
-Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta A,6371
+Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta A,6371.0
 Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta A,212.36666666666667
 Deshidratación del fruto ,%,Esterilización,Planta A,11.8
-Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta A,4170
-Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta A,139
+Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta A,4170.0
+Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta A,139.0
 Vapor evaporador, ,Esterilización,Planta A,4922.866666666667
 Vapor evaporador (específico por tRFF),por tRFF procesado,Esterilización,Planta A,164.09555555555556
 Raquis vacío ,kg∙tRFF∙h-1,Desfrutado,Planta A,24.3
 Humedad raquis,%,Desfrutado,Planta A,64.3
 Masa que pasa por digestor,MPD∙tRFF∙h-1,Desfrutado,Planta A,63.9
 Humedad MPD,%,Desfrutado,Planta A,28.7
-Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta A,2832
-Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta A,11866
-Aceite crudo en LP,%,Digestión y prensado,Planta A,53
-Agua en LP,%,Digestión y prensado,Planta A,14
-Residuos orgánicos en LP,%,Digestión y prensado,Planta A,33
-Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta A,18073
+Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta A,2832.0
+Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta A,11866.0
+Aceite crudo en LP,%,Digestión y prensado,Planta A,53.0
+Agua en LP,%,Digestión y prensado,Planta A,14.0
+Residuos orgánicos en LP,%,Digestión y prensado,Planta A,33.0
+Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta A,18073.0
 Humedad de mesocarpio,%,Digestión y prensado,Planta A,35.2
-Nueces,tNuez∙año-1,Digestión y prensado,Planta A,16825
+Nueces,tNuez∙año-1,Digestión y prensado,Planta A,16825.0
 Humedad de nueces,%,Digestión y prensado,Planta A,11.93
-Agua de dilución,kgagua∙h-1,Clarificación,Planta A,4512
-Temperatura LP,°C,Clarificación,Planta A,80
-Temperatura aceite clarificado,°C,Clarificación,Planta A,70
-Aceite clarificado,kgaceite∙h-1,Clarificación,Planta A,5477
-Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta A,701
-Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta A,13733
-Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta A,3784
-Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta A,736
-Efluente,kgefluente∙h-1,Recuperación de aceite,Planta A,16780
-Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta A,1514
-Temperatura despacho,°C,Almacenamiento,Planta A,50
-Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta A,1615
-Temperatura aire de secado,°C,Secado de nueces,Planta A,50
+Agua de dilución,kgagua∙h-1,Clarificación,Planta A,4512.0
+Temperatura LP,°C,Clarificación,Planta A,80.0
+Temperatura aceite clarificado,°C,Clarificación,Planta A,70.0
+Aceite clarificado,kgaceite∙h-1,Clarificación,Planta A,5477.0
+Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta A,701.0
+Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta A,13733.0
+Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta A,3784.0
+Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta A,736.0
+Efluente,kgefluente∙h-1,Recuperación de aceite,Planta A,16780.0
+Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta A,1514.0
+Temperatura despacho,°C,Almacenamiento,Planta A,50.0
+Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta A,1615.0
+Temperatura aire de secado,°C,Secado de nueces,Planta A,50.0
 Humedad de secado,%,Secado de nueces,Planta A,7.2
-Cuesco,tCuesco∙año-1,Rotura de nuez,Planta A,9189
-Almendra,tAlmendra∙año-1,Rotura de nuez,Planta A,7636
-Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta A,30631
-Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta A,90
+Cuesco,tCuesco∙año-1,Rotura de nuez,Planta A,9189.0
+Almendra,tAlmendra∙año-1,Rotura de nuez,Planta A,7636.0
+Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta A,30631.0
+Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta A,90.0
 Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta A,5129.1
-Fibra en caldera,%,Caldera,Planta A,49
-Cuesco en caldera,%,Caldera,Planta A,79
-Flujo de vapor,kgvapor∙h-1,Caldera,Planta A,71984
-Presión de vapor,bar,Caldera,Planta A, 3
-Temperatura de vapor,°C,Caldera,Planta A, 300
-Temperatura agua de alimentación,°C,Caldera,Planta A,90
-Capacidad de procesamiento,tRFF∙h-1,General,Planta B,40
-Fruto procesado ,tRFF∙año-1,General,Planta B,206207
-Horas de operación,h∙año-1,General,Planta B,5155
+Fibra en caldera,%,Caldera,Planta A,49.0
+Cuesco en caldera,%,Caldera,Planta A,79.0
+Flujo de vapor,kgvapor∙h-1,Caldera,Planta A,71984.0
+Presión de vapor,bar,Caldera,Planta A,3.0
+Temperatura de vapor,°C,Caldera,Planta A,300.0
+Temperatura agua de alimentación,°C,Caldera,Planta A,90.0
+Capacidad de procesamiento,tRFF∙h-1,General,Planta B,40.0
+Fruto procesado ,tRFF∙año-1,General,Planta B,206207.0
+Horas de operación,h∙año-1,General,Planta B,5155.0
 Tasa de extracción aceite,% ACP∙tRFF-1,General,Planta B,20.55
-Aceite crudo producido,tACP∙año-1,General,Planta B,42376
-PKO producido,tPKO∙año-1,General,Planta B,10292
+Aceite crudo producido,tACP∙año-1,General,Planta B,42376.0
+PKO producido,tPKO∙año-1,General,Planta B,10292.0
 Humedad PKO,%,General,Planta B,7.24
-Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta B,8060
+Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta B,8060.0
 Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta B,201.5
 Deshidratación del fruto ,%,Esterilización,Planta B,11.12
-Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta B,5386
+Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta B,5386.0
 Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta B,134.65
 Vapor evaporador, ,Esterilización,Planta B,6065.05
 Vapor evaporador (específico por tRFF),por tRFF procesado,Esterilización,Planta B,151.62625
 Raquis vacío ,kg∙tRFF∙h-1,Desfrutado,Planta B,22.5
 Humedad raquis,%,Desfrutado,Planta B,62.5
 Masa que pasa por digestor,MPD∙tRFF∙h-1,Desfrutado,Planta B,66.38
-Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta B,3524
-Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta B,15972
-Aceite crudo en LP,%,Digestión y prensado,Planta B,54
-Agua en LP,%,Digestión y prensado,Planta B,16
-Residuos orgánicos en LP,%,Digestión y prensado,Planta B,31
-Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta B,25776
+Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta B,3524.0
+Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta B,15972.0
+Aceite crudo en LP,%,Digestión y prensado,Planta B,54.0
+Agua en LP,%,Digestión y prensado,Planta B,16.0
+Residuos orgánicos en LP,%,Digestión y prensado,Planta B,31.0
+Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta B,25776.0
 Humedad de mesocarpio,%,Digestión y prensado,Planta B,33.1
-Nueces,tNuez∙año-1,Digestión y prensado,Planta B,18788
+Nueces,tNuez∙año-1,Digestión y prensado,Planta B,18788.0
 Humedad de nueces,%,Digestión y prensado,Planta B,10.82
-Agua de dilución,kgagua∙h-1,Clarificación,Planta B,6124
-Temperatura LP,°C,Clarificación,Planta B,80
-Temperatura aceite clarificado,°C,Clarificación,Planta B,72
-Aceite clarificado,kgaceite∙h-1,Clarificación,Planta B,7342
-Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta B,1122
-Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta B,18278
-Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta B,5328
-Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta B,878
-Efluente,kgefluente∙h-1,Recuperación de aceite,Planta B,22727
-Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta B,1701
-Temperatura despacho,°C,Almacenamiento,Planta B,52
-Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta B,2157
-Temperatura aire de secado,°C,Secado de nueces,Planta B,55
+Agua de dilución,kgagua∙h-1,Clarificación,Planta B,6124.0
+Temperatura LP,°C,Clarificación,Planta B,80.0
+Temperatura aceite clarificado,°C,Clarificación,Planta B,72.0
+Aceite clarificado,kgaceite∙h-1,Clarificación,Planta B,7342.0
+Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta B,1122.0
+Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta B,18278.0
+Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta B,5328.0
+Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta B,878.0
+Efluente,kgefluente∙h-1,Recuperación de aceite,Planta B,22727.0
+Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta B,1701.0
+Temperatura despacho,°C,Almacenamiento,Planta B,52.0
+Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta B,2157.0
+Temperatura aire de secado,°C,Secado de nueces,Planta B,55.0
 Humedad de secado,%,Secado de nueces,Planta B,7.5
-Cuesco,tCuesco∙año-1,Rotura de nuez,Planta B,8496
-Almendra,tAlmendra∙año-1,Rotura de nuez,Planta B,10292
-Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta B,117538
-Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta B,90
-Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta B,7679
-Fibra en caldera,%,Caldera,Planta B,84
-Cuesco en caldera,%,Caldera,Planta B,100
-Flujo de vapor,kgvapor∙h-1,Caldera,Planta B,101041
+Cuesco,tCuesco∙año-1,Rotura de nuez,Planta B,8496.0
+Almendra,tAlmendra∙año-1,Rotura de nuez,Planta B,10292.0
+Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta B,117538.0
+Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta B,90.0
+Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta B,7679.0
+Fibra en caldera,%,Caldera,Planta B,84.0
+Cuesco en caldera,%,Caldera,Planta B,100.0
+Flujo de vapor,kgvapor∙h-1,Caldera,Planta B,101041.0
 Presión de vapor,bar,Caldera,Planta B,1.5
-Temperatura de vapor,°C,Caldera,Planta B,240
-Temperatura agua de alimentación,°C,Caldera,Planta B,95
-Capacidad de procesamiento,tRFF∙h-1,General,Planta C,30
-Fruto procesado ,tRFF∙año-1,General,Planta C,177589
-Horas de operación,h∙año-1,General,Planta C,5920
+Temperatura de vapor,°C,Caldera,Planta B,240.0
+Temperatura agua de alimentación,°C,Caldera,Planta B,95.0
+Capacidad de procesamiento,tRFF∙h-1,General,Planta C,30.0
+Fruto procesado ,tRFF∙año-1,General,Planta C,177589.0
+Horas de operación,h∙año-1,General,Planta C,5920.0
 Tasa de extracción aceite,% ACP∙tRFF-1,General,Planta C,19.68
-Aceite crudo producido,tACP∙año-1,General,Planta C,34950
-PKO producido,tPKO∙año-1,General,Planta C,7926
+Aceite crudo producido,tACP∙año-1,General,Planta C,34950.0
+PKO producido,tPKO∙año-1,General,Planta C,7926.0
 Humedad PKO,%,General,Planta C,6.78
-Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta C,7036
+Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta C,7036.0
 Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta C,234.53333333333333
 Deshidratación del fruto ,%,Esterilización,Planta C,12.06
-Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta C,4348
+Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta C,4348.0
 Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta C,144.93333333333334
 Vapor evaporador, ,Esterilización,Planta C,4588.25
 Vapor evaporador (específico por tRFF),por tRFF procesado,Esterilización,Planta C,152.94166666666666
 Raquis vacío ,kg∙tRFF∙h-1,Desfrutado,Planta C,22.9
 Humedad raquis,%,Desfrutado,Planta C,66.7
 Masa que pasa por digestor,MPD∙tRFF∙h-1,Desfrutado,Planta C,65.04
-Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta C,2537
-Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta C,11799
-Aceite crudo en LP,%,Digestión y prensado,Planta C,53
-Agua en LP,%,Digestión y prensado,Planta C,17
-Residuos orgánicos en LP,%,Digestión y prensado,Planta C,30
-Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta C,24862
+Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta C,2537.0
+Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta C,11799.0
+Aceite crudo en LP,%,Digestión y prensado,Planta C,53.0
+Agua en LP,%,Digestión y prensado,Planta C,17.0
+Residuos orgánicos en LP,%,Digestión y prensado,Planta C,30.0
+Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta C,24862.0
 Humedad de mesocarpio,%,Digestión y prensado,Planta C,38.4
-Nueces,tNuez∙año-1,Digestión y prensado,Planta C,15918
+Nueces,tNuez∙año-1,Digestión y prensado,Planta C,15918.0
 Humedad de nueces,%,Digestión y prensado,Planta C,13.36
-Agua de dilución,kgagua∙h-1,Clarificación,Planta C,4459
-Temperatura LP,°C,Clarificación,Planta C,80
-Temperatura aceite clarificado,°C,Clarificación,Planta C,70
-Aceite clarificado,kgaceite∙h-1,Clarificación,Planta C,5250
-Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta C,535
-Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta C,13546
-Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta C,3703
-Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta C,654
-Efluente,kgefluente∙h-1,Recuperación de aceite,Planta C,16595
-Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta C,1427
-Temperatura despacho,°C,Almacenamiento,Planta C,55
-Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta C,1556
-Temperatura aire de secado,°C,Secado de nueces,Planta C,60
+Agua de dilución,kgagua∙h-1,Clarificación,Planta C,4459.0
+Temperatura LP,°C,Clarificación,Planta C,80.0
+Temperatura aceite clarificado,°C,Clarificación,Planta C,70.0
+Aceite clarificado,kgaceite∙h-1,Clarificación,Planta C,5250.0
+Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta C,535.0
+Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta C,13546.0
+Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta C,3703.0
+Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta C,654.0
+Efluente,kgefluente∙h-1,Recuperación de aceite,Planta C,16595.0
+Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta C,1427.0
+Temperatura despacho,°C,Almacenamiento,Planta C,55.0
+Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta C,1556.0
+Temperatura aire de secado,°C,Secado de nueces,Planta C,60.0
 Humedad de secado,%,Secado de nueces,Planta C,7.6
-Cuesco,tCuesco∙año-1,Rotura de nuez,Planta C,7992
-Almendra,tAlmendra∙año-1,Rotura de nuez,Planta C,7926
-Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta C,63932
-Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta C,92
+Cuesco,tCuesco∙año-1,Rotura de nuez,Planta C,7992.0
+Almendra,tAlmendra∙año-1,Rotura de nuez,Planta C,7926.0
+Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta C,63932.0
+Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta C,92.0
 Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta C,5585.4
-Fibra en caldera,%,Caldera,Planta C,70
-Cuesco en caldera,%,Caldera,Planta C,82
-Flujo de vapor,kgvapor∙h-1,Caldera,Planta C,149175
-Presión de vapor,bar,Caldera,Planta C,2 
-Temperatura de vapor,°C,Caldera,Planta C,180 
-Temperatura agua de alimentación,°C,Caldera,Planta C,90
-Capacidad de procesamiento,tRFF∙h-1,General,Planta D,24
-Fruto procesado ,tRFF∙año-1,General,Planta D,131909
-Horas de operación,h∙año-1,General,Planta D,5496
+Fibra en caldera,%,Caldera,Planta C,70.0
+Cuesco en caldera,%,Caldera,Planta C,82.0
+Flujo de vapor,kgvapor∙h-1,Caldera,Planta C,149175.0
+Presión de vapor,bar,Caldera,Planta C,2.0
+Temperatura de vapor,°C,Caldera,Planta C,180.0
+Temperatura agua de alimentación,°C,Caldera,Planta C,90.0
+Capacidad de procesamiento,tRFF∙h-1,General,Planta D,24.0
+Fruto procesado ,tRFF∙año-1,General,Planta D,131909.0
+Horas de operación,h∙año-1,General,Planta D,5496.0
 Tasa de extracción aceite,% ACP∙tRFF-1,General,Planta D,19.9
-Aceite crudo producido,tACP∙año-1,General,Planta D,26250
-PKO producido,tPKO∙año-1,General,Planta D,5576
+Aceite crudo producido,tACP∙año-1,General,Planta D,26250.0
+PKO producido,tPKO∙año-1,General,Planta D,5576.0
 Humedad PKO,%,General,Planta D,4.5
-Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta D,5292
+Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta D,5292.0
 Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta D,220.5
 Deshidratación del fruto ,%,Esterilización,Planta D,10.32
-Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta D,3304
+Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta D,3304.0
 Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta D,137.66666666666666
 Vapor evaporador, ,Esterilización,Planta D,3681.7533333333336
 Vapor evaporador (específico por tRFF),por tRFF procesado,Esterilización,Planta D,153.4063888888889
 Raquis vacío ,kg∙tRFF∙h-1,Desfrutado,Planta D,18.6
 Humedad raquis,%,Desfrutado,Planta D,58.9
 Masa que pasa por digestor,MPD∙tRFF∙h-1,Desfrutado,Planta D,71.08
-Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta D,2606
-Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta D,9589
-Aceite crudo en LP,%,Digestión y prensado,Planta D,50
-Agua en LP,%,Digestión y prensado,Planta D,15
-Residuos orgánicos en LP,%,Digestión y prensado,Planta D,35
-Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta D,15829
+Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta D,2606.0
+Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta D,9589.0
+Aceite crudo en LP,%,Digestión y prensado,Planta D,50.0
+Agua en LP,%,Digestión y prensado,Planta D,15.0
+Residuos orgánicos en LP,%,Digestión y prensado,Planta D,35.0
+Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta D,15829.0
 Humedad de mesocarpio,%,Digestión y prensado,Planta D,35.3
-Nueces,tNuez∙año-1,Digestión y prensado,Planta D,13095
+Nueces,tNuez∙año-1,Digestión y prensado,Planta D,13095.0
 Humedad de nueces,%,Digestión y prensado,Planta D,12.29
-Agua de dilución,kgagua∙h-1,Clarificación,Planta D,3425
-Temperatura LP,°C,Clarificación,Planta D,80
-Temperatura aceite clarificado,°C,Clarificación,Planta D,72
-Aceite clarificado,kgaceite∙h-1,Clarificación,Planta D,4125
-Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta D,683
-Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta D,11495
-Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta D,3180
-Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta D,651
-Efluente,kgefluente∙h-1,Recuperación de aceite,Planta D,14024
-Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta D,1127
-Temperatura despacho,°C,Almacenamiento,Planta D,52
-Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta D,1220
-Temperatura aire de secado,°C,Secado de nueces,Planta D,50
+Agua de dilución,kgagua∙h-1,Clarificación,Planta D,3425.0
+Temperatura LP,°C,Clarificación,Planta D,80.0
+Temperatura aceite clarificado,°C,Clarificación,Planta D,72.0
+Aceite clarificado,kgaceite∙h-1,Clarificación,Planta D,4125.0
+Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta D,683.0
+Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta D,11495.0
+Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta D,3180.0
+Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta D,651.0
+Efluente,kgefluente∙h-1,Recuperación de aceite,Planta D,14024.0
+Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta D,1127.0
+Temperatura despacho,°C,Almacenamiento,Planta D,52.0
+Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta D,1220.0
+Temperatura aire de secado,°C,Secado de nueces,Planta D,50.0
 Humedad de secado,%,Secado de nueces,Planta D,7.1
-Cuesco,tCuesco∙año-1,Rotura de nuez,Planta D,7519
-Almendra,tAlmendra∙año-1,Rotura de nuez,Planta D,5576
-Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta D,36935
-Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta D,90
+Cuesco,tCuesco∙año-1,Rotura de nuez,Planta D,7519.0
+Almendra,tAlmendra∙año-1,Rotura de nuez,Planta D,5576.0
+Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta D,36935.0
+Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta D,90.0
 Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta D,4220.9
-Fibra en caldera,%,Caldera,Planta D,86
-Cuesco en caldera,%,Caldera,Planta D,55
-Flujo de vapor,kgvapor∙h-1,Caldera,Planta D,55402
+Fibra en caldera,%,Caldera,Planta D,86.0
+Cuesco en caldera,%,Caldera,Planta D,55.0
+Flujo de vapor,kgvapor∙h-1,Caldera,Planta D,55402.0
 Presión de vapor,bar,Caldera,Planta D,1.5
-Temperatura de vapor,°C,Caldera,Planta D,160
-Temperatura agua de alimentación,°C,Caldera,Planta D,95
-Capacidad de procesamiento,tRFF∙h-1,General,Planta E,24
-Fruto procesado ,tRFF∙año-1,General,Planta E,75534
-Horas de operación,h∙año-1,General,Planta E,3147
+Temperatura de vapor,°C,Caldera,Planta D,160.0
+Temperatura agua de alimentación,°C,Caldera,Planta D,95.0
+Capacidad de procesamiento,tRFF∙h-1,General,Planta E,24.0
+Fruto procesado ,tRFF∙año-1,General,Planta E,75534.0
+Horas de operación,h∙año-1,General,Planta E,3147.0
 Tasa de extracción aceite,% ACP∙tRFF-1,General,Planta E,20.77
-Aceite crudo producido,tACP∙año-1,General,Planta E,15688
-PKO producido,tPKO∙año-1,General,Planta E,2803
+Aceite crudo producido,tACP∙año-1,General,Planta E,15688.0
+PKO producido,tPKO∙año-1,General,Planta E,2803.0
 Humedad PKO,%,General,Planta E,6.74
-Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta E,5153
+Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta E,5153.0
 Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta E,214.70833333333334
 Deshidratación del fruto ,%,Esterilización,Planta E,12.32
-Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta E,3317
+Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta E,3317.0
 Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta E,138.20833333333334
 Vapor evaporador, ,Esterilización,Planta E,3675.42
 Vapor evaporador (específico por tRFF),por tRFF procesado,Esterilización,Planta E,153.1425
 Raquis vacío ,kg∙tRFF∙h-1,Desfrutado,Planta E,24.34
 Humedad raquis,%,Desfrutado,Planta E,59.7
 Masa que pasa por digestor,MPD∙tRFF∙h-1,Desfrutado,Planta E,63.34
-Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta E,2113
-Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta E,9513
-Aceite crudo en LP,%,Digestión y prensado,Planta E,54
-Agua en LP,%,Digestión y prensado,Planta E,17
-Residuos orgánicos en LP,%,Digestión y prensado,Planta E,29
-Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta E,9444
+Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta E,2113.0
+Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta E,9513.0
+Aceite crudo en LP,%,Digestión y prensado,Planta E,54.0
+Agua en LP,%,Digestión y prensado,Planta E,17.0
+Residuos orgánicos en LP,%,Digestión y prensado,Planta E,29.0
+Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta E,9444.0
 Humedad de mesocarpio,%,Digestión y prensado,Planta E,36.6
-Nueces,tNuez∙año-1,Digestión y prensado,Planta E,6247
+Nueces,tNuez∙año-1,Digestión y prensado,Planta E,6247.0
 Humedad de nueces,%,Digestión y prensado,Planta E,14.33
-Agua de dilución,kgagua∙h-1,Clarificación,Planta E,3668
-Temperatura LP,°C,Clarificación,Planta E,80
-Temperatura aceite clarificado,°C,Clarificación,Planta E,71
-Aceite clarificado,kgaceite∙h-1,Clarificación,Planta E,4450
-Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta E,513
-Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta E,10843
-Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta E,3004
-Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta E,535
-Efluente,kgefluente∙h-1,Recuperación de aceite,Planta E,13313
-Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta E,1100
-Temperatura despacho,°C,Almacenamiento,Planta E,50
-Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta E,1286
-Temperatura aire de secado,°C,Secado de nueces,Planta E,55
+Agua de dilución,kgagua∙h-1,Clarificación,Planta E,3668.0
+Temperatura LP,°C,Clarificación,Planta E,80.0
+Temperatura aceite clarificado,°C,Clarificación,Planta E,71.0
+Aceite clarificado,kgaceite∙h-1,Clarificación,Planta E,4450.0
+Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta E,513.0
+Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta E,10843.0
+Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta E,3004.0
+Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta E,535.0
+Efluente,kgefluente∙h-1,Recuperación de aceite,Planta E,13313.0
+Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta E,1100.0
+Temperatura despacho,°C,Almacenamiento,Planta E,50.0
+Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta E,1286.0
+Temperatura aire de secado,°C,Secado de nueces,Planta E,55.0
 Humedad de secado,%,Secado de nueces,Planta E,7.8
-Cuesco,tCuesco∙año-1,Rotura de nuez,Planta E,3444
-Almendra,tAlmendra∙año-1,Rotura de nuez,Planta E,2803
-Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta E,25855
-Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta E,90
+Cuesco,tCuesco∙año-1,Rotura de nuez,Planta E,3444.0
+Almendra,tAlmendra∙año-1,Rotura de nuez,Planta E,2803.0
+Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta E,25855.0
+Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta E,90.0
 Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta E,2852.3
-Fibra en caldera,%,Caldera,Planta E,75 
-Cuesco en caldera,%,Caldera,Planta E,84 
-Flujo de vapor,kgvapor∙h-1,Caldera,Planta E, 85420
-Presión de vapor,bar,Caldera,Planta E,1
-Temperatura de vapor,°C,Caldera,Planta E,160
-Temperatura agua de alimentación,°C,Caldera,Planta E,90
-Capacidad de procesamiento,tRFF∙h-1,General,Planta F,20
-Fruto procesado ,tRFF∙año-1,General,Planta F,38620
-Horas de operación,h∙año-1,General,Planta F,1931
+Fibra en caldera,%,Caldera,Planta E,75.0
+Cuesco en caldera,%,Caldera,Planta E,84.0
+Flujo de vapor,kgvapor∙h-1,Caldera,Planta E,85420.0
+Presión de vapor,bar,Caldera,Planta E,1.0
+Temperatura de vapor,°C,Caldera,Planta E,160.0
+Temperatura agua de alimentación,°C,Caldera,Planta E,90.0
+Capacidad de procesamiento,tRFF∙h-1,General,Planta F,20.0
+Fruto procesado ,tRFF∙año-1,General,Planta F,38620.0
+Horas de operación,h∙año-1,General,Planta F,1931.0
 Tasa de extracción aceite,% ACP∙tRFF-1,General,Planta F,19.3
-Aceite crudo producido,tACP∙año-1,General,Planta F,7454
-PKO producido,tPKO∙año-1,General,Planta F,2177
+Aceite crudo producido,tACP∙año-1,General,Planta F,7454.0
+PKO producido,tPKO∙año-1,General,Planta F,2177.0
 Humedad PKO,%,General,Planta F,4.04
-Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta F,4060
-Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta F,203
+Vapor de esterilización,kgvapor∙h-1,Esterilización,Planta F,4060.0
+Vapor de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta F,203.0
 Deshidratación del fruto ,%,Esterilización,Planta F,12.13
-Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta F,2844
+Condensados de esterilización,kg∙tRFF∙h-1,Esterilización,Planta F,2844.0
 Condensados de esterilización (específico por tRFF),por tRFF procesado,Esterilización,Planta F,142.2
 Vapor evaporador, ,Esterilización,Planta F,3059.9
 Vapor evaporador (específico por tRFF),por tRFF procesado,Esterilización,Planta F,152.995
 Raquis vacío ,kg∙tRFF∙h-1,Desfrutado,Planta F,21.35
 Humedad raquis,%,Desfrutado,Planta F,62.8
 Masa que pasa por digestor,MPD∙tRFF∙h-1,Desfrutado,Planta F,66.52
-Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta F,1806
-Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta F,7885
-Aceite crudo en LP,%,Digestión y prensado,Planta F,53
-Agua en LP,%,Digestión y prensado,Planta F,16
-Residuos orgánicos en LP,%,Digestión y prensado,Planta F,31
-Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta F,4831
+Vapor de digestión,kgvapor∙h-1,Digestión y prensado,Planta F,1806.0
+Licor de prensa,kgLP∙h-1,Digestión y prensado,Planta F,7885.0
+Aceite crudo en LP,%,Digestión y prensado,Planta F,53.0
+Agua en LP,%,Digestión y prensado,Planta F,16.0
+Residuos orgánicos en LP,%,Digestión y prensado,Planta F,31.0
+Fibra de mesocarpio,tFibra∙año-1,Digestión y prensado,Planta F,4831.0
 Humedad de mesocarpio,%,Digestión y prensado,Planta F,36.8
-Nueces,tNuez∙año-1,Digestión y prensado,Planta F,4880
+Nueces,tNuez∙año-1,Digestión y prensado,Planta F,4880.0
 Humedad de nueces,%,Digestión y prensado,Planta F,16.47
-Agua de dilución,kgagua∙h-1,Clarificación,Planta F,2985
-Temperatura LP,°C,Clarificación,Planta F,80
-Temperatura aceite clarificado,°C,Clarificación,Planta F,70
-Aceite clarificado,kgaceite∙h-1,Clarificación,Planta F,3405
-Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta F,408
-Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta F,9271
-Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta F,2605
-Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta F,455
-Efluente,kgefluente∙h-1,Recuperación de aceite,Planta F,11422
-Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta F,932
-Temperatura despacho,°C,Almacenamiento,Planta F,55
-Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta F,992
-Temperatura aire de secado,°C,Secado de nueces,Planta F,60
+Agua de dilución,kgagua∙h-1,Clarificación,Planta F,2985.0
+Temperatura LP,°C,Clarificación,Planta F,80.0
+Temperatura aceite clarificado,°C,Clarificación,Planta F,70.0
+Aceite clarificado,kgaceite∙h-1,Clarificación,Planta F,3405.0
+Vapor de clarificacion,kgvapor∙h-1,Clarificación,Planta F,408.0
+Lodos de clarificación,kgLodos∙h-1,Clarificación,Planta F,9271.0
+Agua de recuperación,kgagua∙h-1,Recuperación de aceite,Planta F,2605.0
+Aceite recuperado,kgaceite∙h-1,Recuperación de aceite,Planta F,455.0
+Efluente,kgefluente∙h-1,Recuperación de aceite,Planta F,11422.0
+Vapor de almacenamiento,kgvapor∙h-1,Almacenamiento,Planta F,932.0
+Temperatura despacho,°C,Almacenamiento,Planta F,55.0
+Vapor de secado,kgvapor∙h-1,Secado de nueces,Planta F,992.0
+Temperatura aire de secado,°C,Secado de nueces,Planta F,60.0
 Humedad de secado,%,Secado de nueces,Planta F,7.4
-Cuesco,tCuesco∙año-1,Rotura de nuez,Planta F,2703
-Almendra,tAlmendra∙año-1,Rotura de nuez,Planta F,2177
-Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta F,15108
-Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta F,90
-Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta F,1283
-Fibra en caldera,%,Caldera,Planta F,54 
-Cuesco en caldera,%,Caldera,Planta F,80 
-Flujo de vapor,kgvapor∙h-1,Caldera,Planta F,78541 
-Presión de vapor,bar,Caldera,Planta F,1
-Temperatura de vapor,°C,Caldera,Planta F, 160
-Temperatura agua de alimentación,°C,Caldera,Planta F,95
+Cuesco,tCuesco∙año-1,Rotura de nuez,Planta F,2703.0
+Almendra,tAlmendra∙año-1,Rotura de nuez,Planta F,2177.0
+Agua de proceso,kgagua∙año-1,Calentamiento agua proceso,Planta F,15108.0
+Temperatura de calentamiento,°C,Calentamiento agua proceso,Planta F,90.0
+Vapor de calentamiento,kgvapor∙año-1,Calentamiento agua proceso,Planta F,1283.0
+Fibra en caldera,%,Caldera,Planta F,54.0
+Cuesco en caldera,%,Caldera,Planta F,80.0
+Flujo de vapor,kgvapor∙h-1,Caldera,Planta F,78541.0
+Presión de vapor,bar,Caldera,Planta F,1.0
+Temperatura de vapor,°C,Caldera,Planta F,160.0
+Temperatura agua de alimentación,°C,Caldera,Planta F,95.0
 Flujo de aire de secado,kgaire seco∙h-1,Secado de nueces,Planta A,
 Flujo de aire de secado,kgaire seco∙h-1,Secado de nueces,Planta B,
 Flujo de aire de secado,kgaire seco∙h-1,Secado de nueces,Planta C,
