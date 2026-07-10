@@ -1,82 +1,82 @@
 Etapa,Planta,Tipo_energia,Valor_kW
-Recepción,Planta A,Electrica,1.0
-Recepción,Planta B,Electrica,0.17
-Recepción,Planta D,Electrica,0.5041006439241801
-Recepción,Planta E,Electrica,0.2
-Recepción,Planta F,Electrica,0.4333709915703485
-Esterilización,Planta A,Electrica,0.08
+Recepción,Planta A,Electrica,30.0
+Recepción,Planta B,Electrica,6.800000000000001
+Recepción,Planta D,Electrica,12.098415454180323
+Recepción,Planta E,Electrica,6.0
+Recepción,Planta F,Electrica,8.667419831406969
+Esterilización,Planta A,Electrica,2.4
 Esterilización,Planta A,Termica,4866.736111111111
-Esterilización,Planta B,Electrica,0.12
+Esterilización,Planta B,Electrica,4.8
 Esterilización,Planta B,Termica,6156.944444444444
-Esterilización,Planta C,Electrica,0.41
+Esterilización,Planta C,Electrica,12.299999999999999
 Esterilización,Planta C,Termica,4588.25
-Esterilización,Planta D,Electrica,0.22445357138229918
+Esterilización,Planta D,Electrica,5.386885713175181
 Esterilización,Planta D,Termica,3681.7533333333336
-Esterilización,Planta E,Electrica,0.3
+Esterilización,Planta E,Electrica,9.0
 Esterilización,Planta E,Termica,4559.849999999999
-Esterilización,Planta F,Electrica,0.19296080646562963
+Esterilización,Planta F,Electrica,3.8592161293125926
 Esterilización,Planta F,Termica,3101.3888888888887
-Desfrutado,Planta A,Electrica,0.7
-Desfrutado,Planta B,Electrica,0.8
-Desfrutado,Planta C,Electrica,0.61
-Desfrutado,Planta D,Electrica,0.6733607141468976
-Desfrutado,Planta E,Electrica,0.6
-Desfrutado,Planta F,Electrica,0.5788824193968888
-Prensado raquis,Planta A,Electrica,1.17
-Prensado raquis,Planta B,Electrica,1.22
-Prensado raquis,Planta D,Electrica,1.3191246777140042
-Prensado raquis,Planta E,Electrica,1.1
-Digestión prensado,Planta A,Electrica,3.35
+Desfrutado,Planta A,Electrica,21.0
+Desfrutado,Planta B,Electrica,32.0
+Desfrutado,Planta C,Electrica,18.3
+Desfrutado,Planta D,Electrica,16.16065713952554
+Desfrutado,Planta E,Electrica,18.0
+Desfrutado,Planta F,Electrica,11.577648387937776
+Prensado raquis,Planta A,Electrica,35.099999999999994
+Prensado raquis,Planta B,Electrica,48.8
+Prensado raquis,Planta D,Electrica,31.6589922651361
+Prensado raquis,Planta E,Electrica,33.0
+Digestión prensado,Planta A,Electrica,100.5
 Digestión prensado,Planta A,Termica,2163.3333333333335
-Digestión prensado,Planta B,Electrica,2.95
+Digestión prensado,Planta B,Electrica,118.0
 Digestión prensado,Planta B,Termica,2691.944444444445
-Digestión prensado,Planta C,Electrica,4.77
+Digestión prensado,Planta C,Electrica,143.1
 Digestión prensado,Planta C,Termica,1937.9861111111113
-Digestión prensado,Planta D,Electrica,4.558983195781454
+Digestión prensado,Planta D,Electrica,109.41559669875488
 Digestión prensado,Planta D,Termica,1990.6944444444446
-Digestión prensado,Planta E,Electrica,5.45
+Digestión prensado,Planta E,Electrica,163.5
 Digestión prensado,Planta E,Termica,1614.0972222222224
-Digestión prensado,Planta F,Electrica,3.919318675588772
+Digestión prensado,Planta F,Electrica,78.38637351177545
 Digestión prensado,Planta F,Termica,1379.5833333333335
-Clarificación,Planta A,Electrica,2.45
+Clarificación,Planta A,Electrica,73.5
 Clarificación,Planta A,Termica,535.0
-Clarificación,Planta B,Electrica,2.35
+Clarificación,Planta B,Electrica,94.0
 Clarificación,Planta B,Termica,857.0833333333334
-Clarificación,Planta C,Electrica,1.8199999999999998
+Clarificación,Planta C,Electrica,54.599999999999994
 Clarificación,Planta C,Termica,408.68055555555554
-Clarificación,Planta D,Electrica,2.9749297125014578
+Clarificación,Planta D,Electrica,71.39831310003498
 Clarificación,Planta D,Termica,521.7361111111111
-Clarificación,Planta E,Electrica,4.16
+Clarificación,Planta E,Electrica,124.80000000000001
 Clarificación,Planta E,Termica,391.875
-Clarificación,Planta F,Electrica,2.5575215086469107
+Clarificación,Planta F,Electrica,51.150430172938215
 Clarificación,Planta F,Termica,311.6666666666667
-Palmistería,Planta A,Electrica,5.62
+Palmistería,Planta A,Electrica,168.6
 Palmistería,Planta A,Termica,1233.6805555555557
-Palmistería,Planta B,Electrica,3.95
+Palmistería,Planta B,Electrica,158.0
 Palmistería,Planta B,Termica,1647.7083333333335
-Palmistería,Planta C,Electrica,5.89
+Palmistería,Planta C,Electrica,176.7
 Palmistería,Planta C,Termica,1188.6111111111113
-Palmistería,Planta D,Electrica,5.403443763523056
+Palmistería,Planta D,Electrica,129.68265032455332
 Palmistería,Planta D,Termica,931.9444444444446
-Palmistería,Planta E,Electrica,4.12
+Palmistería,Planta E,Electrica,123.60000000000001
 Palmistería,Planta E,Termica,982.3611111111112
-Palmistería,Planta F,Electrica,4.645294168766838
+Palmistería,Planta F,Electrica,92.90588337533676
 Palmistería,Planta F,Termica,757.7777777777778
-Almacenamiento,Planta A,Electrica,0.02
+Almacenamiento,Planta A,Electrica,0.6
 Almacenamiento,Planta A,Termica,1156.5277777777778
-Almacenamiento,Planta B,Electrica,0.02
+Almacenamiento,Planta B,Electrica,0.8
 Almacenamiento,Planta B,Termica,1299.375
-Almacenamiento,Planta C,Electrica,0.02
+Almacenamiento,Planta C,Electrica,0.6
 Almacenamiento,Planta C,Termica,1090.0694444444443
-Almacenamiento,Planta D,Electrica,0.02207740046383271
+Almacenamiento,Planta D,Electrica,0.529857611131985
 Almacenamiento,Planta D,Termica,860.9027777777778
-Almacenamiento,Planta E,Electrica,0.02
+Almacenamiento,Planta E,Electrica,0.6
 Almacenamiento,Planta E,Termica,840.2777777777778
-Almacenamiento,Planta F,Electrica,0.018979751455635702
+Almacenamiento,Planta F,Electrica,0.37959502911271403
 Almacenamiento,Planta F,Termica,711.9444444444445
-Extracción palmiste,Planta A,Electrica,5.24
-Extracción palmiste,Planta C,Electrica,5.75
-Extracción palmiste,Planta E,Electrica,8.658
+Extracción palmiste,Planta A,Electrica,157.20000000000002
+Extracción palmiste,Planta C,Electrica,172.5
+Extracción palmiste,Planta E,Electrica,259.74
 Extracción palmiste,Planta F,Electrica,0.0
 Calentamiento de agua,Planta A,Termica,1672.127906976744
 Calentamiento de agua,Planta B,Termica,2301.018087855297
@@ -85,20 +85,20 @@ Calentamiento de agua,Planta D,Termica,1193.3209302325583
 Calentamiento de agua,Planta E,Termica,1935.2325581395348
 Calentamiento de agua,Planta F,Electrica,0.0
 Calentamiento de agua,Planta F,Termica,1174.1860465116279
-Caldera,Planta A,Electrica,5.19
+Caldera,Planta A,Electrica,155.70000000000002
 Caldera,Planta A,Termica,303.0
-Caldera,Planta B,Electrica,2.95
+Caldera,Planta B,Electrica,118.0
 Caldera,Planta B,Termica,303.0
-Caldera,Planta C,Electrica,2.3
+Caldera,Planta C,Electrica,69.0
 Caldera,Planta C,Termica,303.0
-Caldera,Planta D,Electrica,4.426518792998458
+Caldera,Planta D,Electrica,106.23645103196299
 Caldera,Planta D,Termica,303.0
-Caldera,Planta E,Electrica,5.6
+Caldera,Planta E,Electrica,168.0
 Caldera,Planta E,Termica,303.0
-Caldera,Planta F,Electrica,3.8054401668549573
+Caldera,Planta F,Electrica,76.10880333709915
 Caldera,Planta F,Termica,303.0
-Planta tratamiento agua,Planta A,Electrica,0.93
-Planta tratamiento agua,Planta B,Electrica,1.91
-Planta tratamiento agua,Planta C,Electrica,0.05
-Planta tratamiento agua,Planta D,Electrica,1.063394789007942
-Planta tratamiento agua,Planta F,Electrica,0.9141913617797861
+Planta tratamiento agua,Planta A,Electrica,27.900000000000002
+Planta tratamiento agua,Planta B,Electrica,76.39999999999999
+Planta tratamiento agua,Planta C,Electrica,1.5
+Planta tratamiento agua,Planta D,Electrica,25.521474936190607
+Planta tratamiento agua,Planta F,Electrica,18.283827235595723
