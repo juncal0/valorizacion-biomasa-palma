@@ -1230,3 +1230,39 @@ Dos correcciones sobre v3, señaladas por el autor:
 - El mecanismo del CAPEX (15-20x menor del biogás) se integró DENTRO de la frase de
   resultados como aposición, en vez de ir como oración independiente entre el clímax de
   resultados y la conclusión de política, donde rompía el flujo de lectura.
+
+## 46. Selección de revista y requisitos de formato (JCLP)
+
+### 46.1 Estrategia de selección
+Elsevier Journal Finder y Springer Journal Suggester (consultados con el Abstract v4)
+sugirieron: Energy Conversion and Management (y ECM:X), Energy Reports, Energy Nexus,
+Renewable Energy, Energy for Sustainable Development (Elsevier); Clean Technologies and
+Environmental Policy, Biomass Conversion and Biorefinery, Environment Development and
+Sustainability (Springer).
+
+**Decisión: enviar primero a Journal of Cleaner Production (JCLP).** Razones: continuidad
+con la publicación previa del autor (Barrera Hernández et al., 2024), el layout ya sigue su
+estilo, y el hallazgo es de política pública. Riesgo gestionado: el rechazo directo llega en
+~18 días (mediana), por lo que el costo de intentarlo es bajo.
+**Plan B:** Clean Technologies and Environmental Policy (12 días a primera decisión, IF 5.1).
+**Restricción a verificar:** disponibilidad de fondos para APC → evitar revistas de open
+access obligatorio (ECM:X, Energy Reports, Energy Nexus) si no hay financiación.
+
+### 46.2 Requisitos de formato JCLP
+- Extensión: 6,000–8,000 palabras INCLUYENDO tablas, figuras y referencias.
+- Highlights OBLIGATORIOS: archivo editable aparte, 3–5 viñetas de máx. 85 caracteres.
+- Keywords: 1–7, evitando las que contengan "and" u "of".
+- Revisión simple ciego; citación autor-año (Harvard); CRediT y Data availability requeridos.
+- PENDIENTE DE VERIFICAR en la guía oficial: límite exacto del abstract (250 vs. 300
+  palabras) y el alcance del posible máximo de 50 referencias.
+
+### 46.3 Presupuesto de palabras acordado
+Introduction 1,200 | Materials and methods 1,800 | Results and discussion 2,800 |
+Conclusions 600 | Tablas y figuras ~800 | Referencias ~800.
+Consecuencia: inventarios, parámetros termodinámicos y curvas de costos van íntegros al
+Material Suplementario.
+
+### 46.4 Entregables editoriales producidos
+Abstract reencuadrado para JCLP (~250 palabras), 5 highlights, cover letter, keywords.
+Título elegido: "Technology choice, not policy support, resolves the biomass deployment
+trade-off: multi-objective optimization of palm oil mills in Colombia".
