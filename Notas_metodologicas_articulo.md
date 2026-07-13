@@ -1266,3 +1266,33 @@ Material Suplementario.
 Abstract reencuadrado para JCLP (~250 palabras), 5 highlights, cover letter, keywords.
 Título elegido: "Technology choice, not policy support, resolves the biomass deployment
 trade-off: multi-objective optimization of palm oil mills in Colombia".
+
+## 47. Marco regulatorio verificado (fuentes primarias, julio 2026)
+
+### 47.1 Corrección: es Ley 1715 de 2014 (no "Ley 175"), modificada por Ley 2099 de 2021.
+
+### 47.2 OMISIÓN DEL MODELO — incentivos tributarios FNCE
+El modelo NO incorpora los incentivos de la Ley 1715/2014 mod. Ley 2099/2021, a los que la
+biomasa (FNCER) es elegible: deducción de renta del 50% de la inversión (hasta 15 años),
+exclusión de IVA, depreciación acelerada (33.33%/año) y exención arancelaria; vigentes 30
+años desde el 01/07/2021; certificación UPME requerida.
+**Consecuencia:** los resultados económicos son CONSERVADORES. Refuerzan la conclusión
+(Esc.2 rentable incluso sin incentivos) pero deben declararse.
+**Decisión pendiente:** (a) declarar como limitación, o (b) sensibilidad con exclusión de
+IVA (19%) sobre CAPEX.
+
+### 47.3 Matices al marco regulatorio
+- CREG 174/2021 mejora el caso vs. CREG 030 (§34.5). La concavidad tiene DOS motores:
+  tramo de bolsa (0.0703 USD/kWh) Y sobredimensionamiento de turbina (LCOE +21%, §43.3).
+  No atribuirla solo a la regulación.
+- Patrón de emergencia recurrente: CREG 171/2015 (El Niño, <20 MW) → 101 034/2024 →
+  101 053/2024 (El Niño 2023-24, >1 MW) → 101 085/2025 (regasificadora Cartagena).
+  Argumento: el Estado recurre a la cogeneración distribuida en crisis pero no la hace
+  permanente.
+- CREG 101 099/2026 (19-feb-2026, D.O. 03-mar-2026): habilita autogeneración remota (AGR),
+  elimina co-localización, permite participación en cargo por confiabilidad, conexión
+  simplificada <5 MW al SDL. PERO opera bajo principio de simetría (Decreto 1403/2024):
+  mismas reglas que planta convencional + contrato de respaldo para ≥100 kW.
+  Habilita la propuesta de HUB DE BIOMASA (supera barrera CREG 071), pero NO está modelada
+  — presentar como propuesta y línea futura, no como resultado.
+- CREG 101 011/2022: NO VERIFICADA. Confirmar existencia y alcance antes de citarla.
