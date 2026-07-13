@@ -1334,3 +1334,44 @@ son valores antes de IVA. Si son antes de IVA, la exclusión de IVA no aplica y 
 provendría de la deducción de renta y la depreciación acelerada.
 
 Archivo: `sensibilidad_incentivos_tributarios.csv`.
+
+## 49. Tarifa preferencial requerida (Sección 22 del notebook)
+
+### 49.1 Diseño
+Barrido del precio del excedente exportado (tramo de bolsa) de 0.07 a 0.25 USD/kWh. Para
+cada precio se resuelve (a) el óptimo económico LIBRE (¿cuánto elige desplegar la planta?) y
+(b) el despliegue total forzado (¿es rentable?). El precio de permuta (tramo 1-2, minorista)
+no se modifica: la "FiT" así definida es el precio del excedente vendido a la red más allá
+del autoconsumo.
+
+### 49.2 Resultados
+| | Escenario 1 | Escenario 2 |
+|---|---|---|
+| Despliegue elegido al precio actual (0.0703) | 29.0% | **91.0%** |
+| FiT de equilibrio (despliegue total sin pérdidas) | **0.130 USD/kWh** (1.85x el actual) | **0.070** — ya rentable, no requiere FiT |
+| Despliegue elegido a 0.13 | 84.5% | — |
+| Techo asintótico (a 0.25 USD/kWh) | 95.96% | 98.89% |
+
+### 49.3 HALLAZGOS
+1. **La ruta correcta sin subsidio supera a la ruta cara con subsidio:** el Esc.2 despliega
+   voluntariamente el 91% al precio actual; el Esc.1, con una tarifa que casi duplica el
+   precio de mercado (0.130), solo alcanza el 84.5%.
+2. **Respuesta escalonada, no lineal:** el despliegue del Esc.1 se mantiene en 29% hasta
+   0.10 USD/kWh, salta a 84.5% en 0.13 y se estanca en 86.4% entre 0.14 y 0.19. Es el efecto
+   del catálogo DISCRETO de turbinas (la planta no puede comprar "un poco más de turbina").
+   Resultado que un modelo de capacidad continua no habría revelado — argumento a favor de
+   la formulación MILP.
+3. **El 100% no se alcanza a NINGÚN precio, en NINGÚN escenario** (techo de 95.96% y 98.89%
+   a 0.25 USD/kWh). El último tramo de biomasa NO es recuperable por señales de precio: es
+   granularidad tecnológica del catálogo. **La respuesta no es tarifa, es escala** → hub de
+   biomasa bajo CREG 101 099/2026 (§47.3).
+
+### 49.4 Los tres instrumentos y sus tres roles (núcleo de la Sección 3.4)
+- **Incentivo al CAPITAL** (Ley 1715/2099): potente fiscalmente (30% elimina el 92% de la
+  brecha) pero NO mueve la decisión de dimensionamiento (§48.3).
+- **Incentivo al PRECIO** (FiT): el único que mueve la decisión (29% → 96%), pero requiere
+  1.85x el precio actual en el Esc.1 — e innecesario en el Esc.2.
+- **ESCALA** (hub, AGR): único camino al tramo final del potencial.
+
+Archivos: `tarifa_preferencial_esc1.csv`, `tarifa_preferencial_esc2.csv`,
+`tarifa_preferencial_comparacion.png`.
