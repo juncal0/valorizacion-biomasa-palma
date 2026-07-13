@@ -1296,3 +1296,41 @@ IVA (19%) sobre CAPEX.
   Habilita la propuesta de HUB DE BIOMASA (supera barrera CREG 071), pero NO está modelada
   — presentar como propuesta y línea futura, no como resultado.
 - CREG 101 011/2022: NO VERIFICADA. Confirmar existencia y alcance antes de citarla.
+
+## 48. Sensibilidad a los incentivos tributarios (Sección 21 del notebook)
+
+### 48.1 Diseño
+El modelo base no incorpora los incentivos de la Ley 1715/2014 (mod. Ley 2099/2021). En vez
+de modelar un instrumento específico (cuyo efecto depende de si las cotizaciones incluían
+IVA y de la posición tributaria de cada empresa), se evalúa un FACTOR GENÉRICO de reducción
+efectiva del CAPEX (0%, 10%, 19%, 30%), aplicado a CAPEX fijo y variable. Verificación: la
+fila 0% reproduce exactamente los resultados base (72.2 GWh, +$2,063,746, equilibrio 50.7%).
+
+### 48.2 Resultados (Escenario 1)
+| Incentivo | Equilibrio (% potencial) | Beneficio despliegue total |
+|---|---|---|
+| 0% | 50.7% | −$11,043,659 |
+| 10% | 66.4% | −$7,654,581 |
+| 19% | 87.5% | −$4,604,410 |
+| 30% | 97.7% | −$876,424 |
+
+### 48.3 HALLAZGOS
+1. **Los incentivos a la inversión ya existentes son 1-2 órdenes de magnitud más efectivos
+   que el impuesto al carbono** (que cubre solo el 1.93% de la brecha). Con un 30% de
+   reducción efectiva del CAPEX, la brecha del despliegue total cae un 92%.
+2. **Un subsidio a la inversión NO cambia la decisión de dimensionamiento.** El óptimo
+   privado del Esc.1 permanece en 72.2 GWh en las CUATRO filas: los incentivos escalan todo
+   el CAPEX proporcionalmente y no alteran la relación entre costo marginal e ingreso
+   marginal. Enriquecen al inversionista sin mover lo que construye. **Para mover la
+   decisión hay que tocar el PRECIO de la energía (tarifa preferencial), no el costo del
+   capital.** (Excepción: el Esc.2 sí desplaza su óptimo, 137.9 → 148.6 GWh al 30%, por lo
+   plano de su frente.)
+3. **La dominancia del Escenario 2 es robusta:** rentable al 100% de su potencial bajo los
+   cuatro niveles de incentivo. El hallazgo central no depende de supuestos fiscales.
+
+### 48.4 Pendiente
+Confirmar si las cotizaciones de proveedores (AIC, MFMI, AVM, Tecnintegral) incluyen IVA o
+son valores antes de IVA. Si son antes de IVA, la exclusión de IVA no aplica y el beneficio
+provendría de la deducción de renta y la depreciación acelerada.
+
+Archivo: `sensibilidad_incentivos_tributarios.csv`.
