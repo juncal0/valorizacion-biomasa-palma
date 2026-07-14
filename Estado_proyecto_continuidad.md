@@ -271,6 +271,22 @@ Hub centralizado de biomasa bajo CREG 101 099/2026 (autogeneración remota). La 
 economías de escala fuertes ($5,277/kW a 1 MW → $2,101/kW a 10 MW) → podría volver viables a
 E y F. Mencionar en Conclusions como línea futura. Posible segundo artículo.
 
+### ANÁLISIS 2 — Descomposición del margen marginal (OPCIONAL, si el tiempo alcanza)
+**Pregunta:** ¿por qué el óptimo privado del Esc.1 está en 76% y no en 100%, si el 24%
+restante TAMBIÉN es rentable?
+**Motivo:** es la anomalía central del resultado nuevo. Hay biomasa que produce beneficio
+positivo y aun así no se despliega. Explicarlo convierte un "observamos que" en un
+"explicamos por qué" — que es lo que separa una descripción de un diagnóstico.
+**Método:** descomponer el margen del kWh marginal en sus tres componentes candidatos:
+  (a) el tramo de bolsa (0.0703 USD/kWh) que aplasta el ingreso marginal;
+  (b) la discretización del catálogo (el salto al siguiente tamaño de turbina no compensa);
+  (c) el costo de oportunidad de la biomasa quemada (Corrección 5: PKS $16/t, MF $8/t).
+**Valor:** identifica cuál de los tres es el cuello de botella real → determina qué palanca
+de política tendría efecto. Conecta directamente con el Análisis 4 (si el culpable es (a),
+la señal de precio funciona; si es (b), solo la escala/hub; si es (c), nada de política
+energética lo mueve).
+**Prioridad:** opcional. Hacerlo si el tiempo alcanza tras 1 y 4.
+
 ### PENDIENTES ANTES DE REESCRIBIR EL TEXTO
 1. **Unificar `f1_beneficio_neto_total_USD`:** el de `df_pareto` NO resta el O&M del CAPEX
    fijo ($709,941/año); el de la Sección 19b SÍ. Usar el de 19b. (Por eso la Sección 20 daba
