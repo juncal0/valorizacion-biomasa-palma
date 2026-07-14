@@ -117,14 +117,171 @@ El optimizador trataba la biomasa como **recurso gratuito e ilimitado**. Ahora r
 - **Precio firme (cargo por confiabilidad):** válido para biomasa pero diseñado para plantas >20 MW (las nuestras son 5-9.5 MW) → **queda como discusión de política**, no se modela.
 - **Valor del carbono (Decreto 926/2017):** válido pero ~50-190× menor que los precios de electricidad → **cálculo de referencia aparte**, no entra al solver.
 
----
+## ESTADO AL CIERRE DE ESTA SESIÓN (julio 2026)
 
-## PENDIENTES
+### Verificado en esta sesión
+- `capex_fijo_anualizado_total_esc1` = $3,335,578 (CAPEX fijo $28,397,653 / PVAF 8.5136).
+  **NO incluye O&M** → el O&M del CAPEX fijo (2.5%) debe restarse aparte, fuera del objetivo.
+- Bug de nombre resuelto: `perdida_estacional` → `perdida_estacional_v2` (sensibilidad estacional).
 
-1. **Documentar las 5 correcciones** y reescribir Secciones 28, 32, 33, 34, 36 de las notas. ← PRIORIDAD
-2. **`f2_generacion` mide potencia BRUTA en bornes**, no energía neta exportada. Como es el eje del frente de Pareto y el proxy de los pilares ambiental/social, o se renombra explícitamente ("generación bruta") o se cambia a energía neta. Un revisor podría objetar que emisiones evitadas y viviendas beneficiadas se calculan sobre energía *exportada*, no bruta.
-3. Verificar el denominador del indicador de cobertura rural (da 561-758%).
-4. **Exceso de aire** del secador EFB (Esc.1): se mantiene 30% (literatura genérica); no se pudo confirmar Ocampo Batlle et al. (2020) — paywall.
-5. Redacción del artículo.
-6. **Decisión pendiente de sesiones anteriores:** costo de cogeneración con vapor — usamos 258 COP/kWh (UPME) pero Entrepalmas (planta real) reporta **90 COP/kWh** (2.9× menor). Afecta el precio ponderado de Plantas A y D.
-7. **Discusión sin modelar:** reactores/tanques cerrados vs. lagunas carpadas (los primeros facilitan la remoción del digestato, ~90% de la masa de entrada, pero mayor CAPEX; no hay costos disponibles).
+### 🔴 ROTO ESTRUCTURALMENTE — hay que rehacer (NO es bug de nombre)
+Tres bloques del notebook reconstruyen el CAPEX como `capacidad × costo_específico_constante`.
+Con la regla de los seis décimos (Corrección 1) **el costo específico ya no es constante**
+($5,277/kW a 1 MW → $2,101/kW a 10 MW), y los parámetros `costo_especifico_kW` y
+`costo_biogas_kW` **ya no existen en el modelo**. Reconstruir el CAPEX así reintroduce el
+error lineal ya corregido.
+
+**Solución:** leer el CAPEX del diccionario `CAPEX_TURBINA_ESC1[k]` / `CAPEX_TURBINA_ESC2[k]`
+(indexado por tamaño del catálogo, ya con regla 0.6 y sin doble conteo de caldera) y
+`CAPEX_UNIDAD_BIOGAS` × N módulos (lineal en N).
+
+- **Sección 19** (indicadores sobre el frente, Esc.1): CORREGIDA, pendiente de correr.
+- **Sección 19 bis** (Esc.2): pendiente de rehacer igual.
+- **Sección 21** (sensibilidad a incentivos): pendiente. Escalaba constantes globales de
+  costo que ya no existen.
+- **Sección 22** (tarifa preferencial / feed-in tariff): pendiente. Depende de la anterior.
+
+### 🔴 OBSOLETO EN EL ARTÍCULO (calculado sobre el CAPEX inflado)
+- **Results and Discussion v1** — completo. Los "tres óptimos" (29%/43.4%/50.7%), la U del
+  LCOE, la dominancia de Pareto del Esc.2, la brecha de $13.1M, la FiT de 0.130 USD/kWh y
+  el 1.93% del impuesto al carbono: **todos inválidos**.
+- **Abstract v4, título, highlights y cover letter** — construidos sobre el mensaje viejo
+  ("technology choice, not policy support"). El mensaje nuevo es otro (ver abajo).
+- **Notas metodológicas §43 a §49** — obsoletas.
+
+### ✅ SE SALVA
+- **Materials and Methods v3** — casi entero. Corregir: (a) la ecuación de Thomsen NO es la
+  operativa (solo se usó para derivar f_VS del EFB); (b) POME siempre vía Rahayu et al.
+  (2015), 0.35 Nm³ CH4/kg DQO, en AMBOS escenarios (Corrección 3); (c) el CAPEX ya no es
+  lineal (regla 0.6) y las turbinas ya incluyen la caldera.
+- **Introduction v1** — salvo el "gap", que hay que reformular al mensaje nuevo.
+
+### MENSAJE NUEVO DEL ARTÍCULO (reemplaza al anterior)
+*"La valorización energética de biomasa de palma es financieramente viable por sí sola bajo
+CREG 174/2021, sin subsidios. Ambos escenarios son rentables incluso desplegando el 100% de
+la biomasa. La tensión entre rentabilidad privada y beneficio socioambiental existe pero es
+modesta: cuesta 12% del beneficio en el Esc.2 y 45% en el Esc.1."*
+
+Hallazgo metodológico adicional publicable: **huecos en el frente de Pareto** por la
+discretización del catálogo comercial → justifica ε-constraint sobre suma ponderada.
+
+### PENDIENTES QUE AÚN PUEDEN MOVER NÚMEROS (resolver ANTES de reescribir el texto)
+1. **`f2_generacion` mide potencia BRUTA en bornes**, pero las emisiones evitadas y las
+   viviendas beneficiadas se calculan sobre energía **exportada**. Es el eje del frente de
+   Pareto y el proxy de los pilares ambiental y social → inconsistencia interna que un
+   revisor objetará. Decidir: renombrar a "generación bruta" o cambiar el eje a energía
+   exportada/neta (**esto movería el frente de Pareto**).
+2. **Denominador de la cobertura rural** (da 561–758%, implausible).
+
+### ORDEN DE TRABAJO RECOMENDADO
+1. Resolver los dos pendientes de arriba (pueden mover el frente).
+2. Rehacer Secciones 19 bis, 21 y 22 del notebook leyendo el CAPEX del diccionario.
+3. Recalcular indicadores sobre el frente nuevo.
+4. Solo entonces reescribir: título → abstract → Results → ajustar Introduction y Methods.
+## RESULTADOS DEFINITIVOS (CAPEX corregido) — Secciones 19/19bis/19c
+
+LCOE ahora en rango de literatura (0.047–0.078 USD/kWh) → validación de sentido físico OK.
+
+| | Escenario 1 | Escenario 2 |
+|---|---|---|
+| Óptimo privado | 189.5 GWh (76.1%) — $4,156,714 — LCOE 0.0715 — 27,785 tCO2 | 147.5 GWh (91.2%) — $7,241,802 — LCOE 0.0466 — 21,354 tCO2 |
+| LCOE mínimo | 215.3 GWh (86.4%) — LCOE 0.0704 | 147.5 GWh (91.2%) — coincide con el óptimo privado |
+| Despliegue 100% | 249.1 GWh — $1,964,312 — LCOE 0.0781 — 37,528 tCO2 | 161.6 GWh — $6,334,963 — LCOE 0.0507 — 23,665 tCO2 |
+| Costo de desplegar el 100% | $2,192,403/año (53% del óptimo) | $906,838/año (13% del óptimo) |
+| **Costo por tCO2 adicional** | **$225/tCO2** | **$392/tCO2** |
+
+### HALLAZGOS
+1. **Ningún escenario requiere subsidio:** rentables en todo el frente (mín. $1.96M y $6.33M).
+2. **El Esc.2 domina en lo privado** (+74% beneficio, LCOE 35% menor) pero genera 35% menos energía.
+3. **GIRO IMPORTANTE — la dominancia NO es total:** el Esc.2 compra CO2 evitado MÁS CARO
+   ($392 vs. $225/tCO2), porque ya opera al 91% en su óptimo privado y le queda poco margen.
+   El Esc.1 arranca en 76% y su expansión es más barata. En términos absolutos el Esc.1 evita
+   mucho más (37,528 vs. 23,665 tCO2). → **No escribir "dominancia de Pareto" sin matizar.**
+4. Ambos costos marginales ($225 y $392/tCO2) están MUY por encima del impuesto al carbono
+   colombiano → el argumento de su ineficacia sobrevive, por otra vía.
+5. **Cautela:** en el Esc.1, el óptimo privado y el LCOE mínimo distan solo 0.5% en beneficio
+   ($22k/año) — posible ruido de la discretización del catálogo. No construir argumento fuerte.
+
+## RESULTADOS DEFINITIVOS — CAPEX corregido (Secciones 19, 19bis, 19c, 20)
+
+LCOE en rango de literatura (0.047–0.078 USD/kWh) → sentido físico OK.
+
+| | Escenario 1 | Escenario 2 |
+|---|---|---|
+| Óptimo privado | 189.5 GWh (76.1%) — $4,156,714 — LCOE 0.0715 — 27,785 tCO2 | 147.5 GWh (91.2%) — $7,241,802 — LCOE 0.0466 — 21,354 tCO2 |
+| LCOE mínimo | 215.3 GWh (86.4%) — LCOE 0.0704 | coincide con el óptimo privado |
+| Despliegue 100% | 249.1 GWh — $1,964,312 — LCOE 0.0781 — 37,528 tCO2 | 161.6 GWh — $6,334,963 — LCOE 0.0507 — 23,665 tCO2 |
+| Costo de desplegar el 100% | $2,192,403/año (53% del óptimo) | $906,838/año (13% del óptimo) |
+| **Costo implícito de mitigación** | **$225/tCO2** | **$392/tCO2** |
+
+### MENSAJE DEFINITIVO DEL ARTÍCULO
+"No hay nada que subsidiar: ambas rutas son rentables incluso al 100% de despliegue.
+La decisión pública no es cuánto compensar, sino QUÉ RUTA FAVORECER — y NINGUNA DOMINA:
+- Objetivo rentabilidad → Esc.2 (+74% beneficio, LCOE 35% menor, 13% de costo para llegar al 100%)
+- Objetivo climático → Esc.1 (+59% tCO2 evitadas en absoluto; mitigación marginal a $225 vs. $392/tCO2)
+El impuesto al carbono ($7.49/tCO2) es 30-52x menor que el costo implícito real → incapaz de
+movilizar el tramo marginal en ninguna ruta."
+
+⚠️ NO usar el lenguaje de "brecha a subsidiar" ni "dominancia de Pareto" — ambos obsoletos.
+
+### Sección 22 — REFORMULAR (no descartar)
+El marco de "tarifa preferencial / FiT" queda obsoleto: no hay brecha de rentabilidad que
+cerrar (ambos escenarios rentables al 100%). PERO la pregunta subyacente sigue viva y
+reformulada: **¿qué precio del excedente induce a la planta a ELEGIR el 100%?** El óptimo
+privado del Esc.1 está en 76% — hay un 24% del potencial que no se despliega aunque sería
+rentable. Eso es INCENTIVO, no subsidio.
+- Renombrar a "respuesta del despliegue a la señal de precio".
+- Eliminar la parte (a) "FiT de equilibrio". Conservar la (b) y la figura.
+- Arreglar `barrido_fit()`: NO debe tocar las constantes de costo (ya no existen); solo
+  `PRECIO_BOLSA_PROMEDIO`.
+- Conectar con el costo implícito de mitigación ($225 y $392/tCO2, Sección 20).
+
+## PLAN DE ANÁLISIS ACORDADO (próxima sesión)
+
+Los resultados corregidos son sólidos pero "cómodos" (todo rentable, nadie necesita subsidio).
+Faltan dos análisis para recuperar tensión y blindar el artículo.
+
+### ANÁLISIS 1 — Desagregado por planta (PRIORIDAD)
+**Pregunta:** ¿"rentable sin subsidio" vale para las 6 plantas, o solo para las grandes?
+**Motivo:** enorme heterogeneidad — F opera 1,931 h/año y E 3,147, contra ~5,500 de A–D;
+LCOE por planta va de 0.076 a 0.262 USD/kWh (Esc.1). E y F ya salían rezagadas en análisis
+previos (social, LCOE, económico).
+**Hipótesis:** si E y F NO son rentables individualmente → hallazgo de EQUIDAD: la viabilidad
+es de las plantas grandes, no del sector. Justifica intervención pública FOCALIZADA (no
+general) y reactiva la discusión de política.
+**Datos:** ya existen en `df_pareto_plantas` / `df_pareto_plantas_e2`. Es análisis, no
+modelado nuevo.
+
+### ANÁLISIS 4 — Robustez del resultado central al precio de la electricidad
+**Pregunta:** ¿a qué precio deja de ser rentable el despliegue?
+**Motivo:** el resultado "rentable sin subsidio" descansa sobre precios de compra que varían
+2.3x entre plantas (0.114–0.259 USD/kWh) y sobre un precio de bolsa promediado a 11 meses en
+un mercado VOLÁTIL. Es la objeción más obvia de un revisor.
+**Alcance:** barrer precio de compra y precio de bolsa; identificar el umbral de rentabilidad.
+Reutilizar la maquinaria de `barrido_fit()` PERO arreglada (no debe tocar constantes de costo,
+que ya no existen; solo `PRECIO_BOLSA_PROMEDIO`).
+
+### ANÁLISIS 3 — Reportar (ya existe, no explotado)
+Huecos en el frente de Pareto por discretización del catálogo comercial (varios ε devuelven
+la misma solución). Hallazgo metodológico publicable: un modelo de capacidad CONTINUA daría
+respuesta cualitativamente distinta. Justifica ε-constraint sobre suma ponderada.
+
+### ANÁLISIS 5 — TRABAJO FUTURO (declarado, no modelado)
+Hub centralizado de biomasa bajo CREG 101 099/2026 (autogeneración remota). La regla 0.6 da
+economías de escala fuertes ($5,277/kW a 1 MW → $2,101/kW a 10 MW) → podría volver viables a
+E y F. Mencionar en Conclusions como línea futura. Posible segundo artículo.
+
+### PENDIENTES ANTES DE REESCRIBIR EL TEXTO
+1. **Unificar `f1_beneficio_neto_total_USD`:** el de `df_pareto` NO resta el O&M del CAPEX
+   fijo ($709,941/año); el de la Sección 19b SÍ. Usar el de 19b. (Por eso la Sección 20 daba
+   $4,866,656 y la 19b $4,156,714.)
+2. **Verificar el impuesto al carbono vigente 2026** (usado: COP 25,000/tCO2 = $7.49, TRM 3,339.65).
+3. **`f2_generacion` = potencia BRUTA** vs. energía exportada (emisiones y viviendas se
+   calculan sobre exportada). Puede mover el frente.
+4. **Denominador de cobertura rural** (561–758%).
+5. Secciones 21 (incentivos) y 22 (FiT): rotas. La 22 pierde sentido — ya no hay brecha.
+
+### A REESCRIBIR
+Results and Discussion (completo), Abstract, título, highlights, cover letter, notas §43–§49.
+Se salvan: Materials and Methods v3 (corregir Thomsen, POME vía Rahayu, CAPEX regla 0.6) e
+Introduction v1 (reformular el gap).
