@@ -1450,3 +1450,33 @@ precio) se obtiene aparte con barrido_fit(), que re-optimiza.
 **Pendiente ligado (§43.3):** la línea de A depende de su precio ponderado (0.1141), que
 arrastra el costo de cogeneración con vapor sin resolver. Una caída de 0.0064 USD/kWh
 (5.6%) vuelve a A negativa en Esc.1. Resolver antes de finalizar el veredicto de A y D.
+
+### 51.1 — Complemento: elección de despliegue vía barrido_fit() (corregido)
+
+**Hallazgo de proceso:** `barrido_fit()` calcula beneficio = f1_economico − capex_fijo
+(solo anualización), sin restar el O&M fijo (2.5% del CAPEX fijo). La convención del
+artículo (§19b) sí lo resta. Se corrigió restando una constante por escenario antes de
+interpretar: O&M fijo Esc.1 = $709,941/año; Esc.2 = $466,850/año. Validado: a precio
+exacto 0.07 el beneficio corregido (Esc.1: $1,901,235) coincide al peso con el cálculo
+analítico independiente de §51 al mismo precio. **Pendiente:** decidir si corregir
+barrido_fit() en el notebook fuente o dejar la corrección solo en el análisis.
+
+**Resultado — % del potencial elegido libremente por el óptimo privado:**
+
+| Precio bolsa | Esc.1 | Esc.2 |
+|---|---|---|
+| 0.07 (actual) | 76.1% | 91.2% |
+| 0.10 | 87.5% | 91.2% |
+| 0.15 | 96.0% | 97.8% |
+| 0.25 | 99.6% | 99.7% |
+
+**Hallazgos:**
+1. A precio actual, NINGÚN escenario elige el 100% libremente (Esc.1: 76%; Esc.2: 91%).
+   El "rentable sin subsidio al 100%" de §50 es una cota de factibilidad, no una
+   predicción de despliegue espontáneo del mercado.
+2. Coherencia entre métodos: ambas curvas de beneficio en despliegue forzado son
+   positivas en todo el rango 0.07–0.25, consistente con que el precio de quiebre
+   analítico (§51: 0.061 Esc.1, 0.021 Esc.2) cae por debajo de ese rango.
+3. Costo de forzar el 100% (beneficio_libre − beneficio_despliegue_total) a precio
+   actual: 14% del beneficio libre en Esc.1, 13% en Esc.2; cae a ~1% cuando el precio
+   sube lo suficiente para que el óptimo privado ya casi coincida con el 100%.
