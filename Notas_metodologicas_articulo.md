@@ -1415,3 +1415,38 @@ en ambos escenarios.
 **Cautela:** el veredicto es sobre el despliegue 100%. En el óptimo económico privado
 (76% Esc.1) el reparto por planta puede diferir; pendiente el contraste óptimo-vs-100%
 leyendo `m.factor_utilizacion` del modelo resuelto.
+
+## 51. Análisis 4 — Robustez del resultado central al precio de bolsa (Sección 24)
+
+**Pregunta:** ¿a qué precio de bolsa deja de ser rentable el despliegue 100%?
+
+**Método:** al fijar el despliegue en 100%, las cantidades físicas quedan constantes
+(util=1, reparto auto/permuta/bolsa fijo por los topes de consumo), así que el beneficio
+es lineal en el precio de bolsa. Precio de quiebre = raíz de esa recta. Exacto, sin
+re-optimizar. La respuesta de ELECCIÓN de despliegue (cuánto elige cada planta a cada
+precio) se obtiene aparte con barrido_fit(), que re-optimiza.
+
+**Resultado (precio de bolsa de quiebre; actual = 0.0703):**
+
+| | Esc.1 | Esc.2 |
+|---|---|---|
+| Agregado | 0.0610 (13% margen) | 0.0208 (70% margen) |
+| A | 0.0689 (al filo) | 0.0383 |
+| B | 0.0391 | 0.0102 |
+| C | 0.0288 | 0.0000 (no depende del spot) |
+| D | 0.0633 | 0.0318 |
+| E | 0.0875 (necesita subir) | 0.0142 |
+| F | 0.2070 (≈3×) | 0.1307 (≈1.85×) |
+
+**Hallazgos:**
+1. El resultado central es MUY robusto en Esc.2 (aguanta −70% de bolsa) y frágil en
+   Esc.1 (−13%). La robustez es un tercer eje de ventaja del Esc.2 (junto a rentabilidad
+   y equidad).
+2. La rentabilidad de A en Esc.1 es marginal (2% de margen): en robustez, solo B, C, D
+   son viables en Esc.1.
+3. Ningún precio de bolsa plausible rescata a F → confirma que F requiere escala (hub,
+   Análisis 5), no señal de precio. E sí se rescata robustamente eligiendo la ruta de biogás.
+
+**Pendiente ligado (§43.3):** la línea de A depende de su precio ponderado (0.1141), que
+arrastra el costo de cogeneración con vapor sin resolver. Una caída de 0.0064 USD/kWh
+(5.6%) vuelve a A negativa en Esc.1. Resolver antes de finalizar el veredicto de A y D.
