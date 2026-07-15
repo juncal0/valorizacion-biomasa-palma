@@ -1575,3 +1575,38 @@ sobre un dataframe con columnas 'generacion_GWh'/'emisiones_evitadas_tCO2' que
 NO es df_pareto directamente — no se pudo verificar su fuente en esta sesión.
 Probablemente correcto (dado que balance_emisiones_escX sí lo está), pero sin
 confirmar.
+
+## 54. Pendiente #4 (CERRADO) — Denominador de cobertura rural, validado
+
+**Investigación:** se sospechó que `DEMANDA_RESIDENCIAL_RURAL_GWh = 30.3` y/o
+`CONSUMO_PROMEDIO_VIVIENDA_RURAL_kWh = 346.22` eran datos erróneos (28.8 kWh/mes
+parecía 6x más bajo que el consumo de subsistencia CREG, 173 kWh/mes).
+
+**Resolución — el dato es correcto, la comparación inicial fue la equivocada:**
+1. `30.3 GWh` coincide EXACTO con la demanda residencial RURAL de Magdalena en 2019
+   reportada en Cabello Eras, J.J., Mendoza Fandiño, J.M., Sagastume Gutiérrez, A.,
+   Rueda Bayona, J.G., & Sofán Germán, S.J. (2022). "The inequality of electricity
+   consumption in Colombia. Projections and implications." *Energy*, 249, 123711.
+   https://doi.org/10.1016/j.energy.2022.123711 (Tabla 3, fuente: datos oficiales [34]).
+2. El mismo artículo confirma que Magdalena es uno de solo 5 departamentos de Colombia
+   (junto con Atlántico, Bolívar, Chocó, Guajira — todos Caribe) con consumo eléctrico
+   rural per cápita BAJO 100 kWh/persona/año — el promedio rural nacional es 208.
+3. Cruce con dato propio ya documentado (§7, personas/hogar Magdalena = 3.7, DANE CNPV
+   2018): 346.22 kWh/vivienda/año ÷ 3.7 = **93.6 kWh/persona/año** — consistente con el
+   umbral <100 kWh/persona/año que el artículo asigna a Magdalena. Validación cruzada
+   exitosa entre dos fuentes independientes.
+
+**Conclusión:** el 561-758% de "cobertura rural" NO es un artefacto de cálculo — es un
+hallazgo genuino: el excedente eléctrico de biomasa de palma podría multiplicar varias
+veces la demanda rural actual del departamento, precisamente porque esa demanda está
+deprimida por pobreza energética real y documentada externamente. La corrección de
+§43.4 (saturar el indicador en 87,516 usuarios/hogares, no reportar %>100) sigue siendo
+la forma correcta de comunicarlo — ahora con respaldo peer-reviewed citable, en vez de
+solo una decisión metodológica propia. Reforzar el ángulo de equidad energética en la
+Discusión: la comparación contra el consumo de subsistencia CREG (dato regulatorio, no
+empírico) fue el error de este chequeo, no el dato original del modelo.
+
+**Recomendación para el artículo:** citar Cabello Eras et al. (2022) tanto para
+justificar `DEMANDA_RESIDENCIAL_RURAL_GWh` como para enmarcar la narrativa de impacto
+social — la baja demanda rural de Magdalena no es una curiosidad del modelo, es
+evidencia externa de la necesidad que el proyecto busca atender.
