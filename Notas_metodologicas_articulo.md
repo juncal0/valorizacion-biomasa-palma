@@ -1606,7 +1606,31 @@ solo una decisión metodológica propia. Reforzar el ángulo de equidad energét
 Discusión: la comparación contra el consumo de subsistencia CREG (dato regulatorio, no
 empírico) fue el error de este chequeo, no el dato original del modelo.
 
+
 **Recomendación para el artículo:** citar Cabello Eras et al. (2022) tanto para
 justificar `DEMANDA_RESIDENCIAL_RURAL_GWh` como para enmarcar la narrativa de impacto
 social — la baja demanda rural de Magdalena no es una curiosidad del modelo, es
 evidencia externa de la necesidad que el proyecto busca atender.
+
+## 55. Pendiente #1 (CERRADO — falsa alarma, ya estaba resuelto) — costo_oportunidad()
+
+**Investigación:** se sospechaba que costo_oportunidad() (Sección 20, origen de los
+$225/$392 por tCO2) arrastraba el mismo bug de O&M fijo que se encontró y corrigió
+en barrido_fit() esta sesión.
+
+**Resolución:** costo_oportunidad() opera sobre df_sost/df_sost_e2 (NO sobre
+df_pareto). Validado al peso: las 8 cifras clave de ambos escenarios (generación,
+beneficio, LCOE, emisiones en el óptimo económico) reproducen exactas la tabla
+RESULTADOS DEFINITIVOS ya publicada en el documento de continuidad, incluidos los
+$225/tCO2 (Esc.1) y por extensión $392/tCO2 (Esc.2, mismo patrón). Los $225/$392
+por tCO2 de la tabla RESULTADOS DEFINITIVOS son correctos, sin cambios.
+
+**Riesgo residual identificado:** df_pareto SÍ conserva su columna
+f1_beneficio_neto_total_USD sin corregir (bug original, $4,866,656 vs. $4,156,714
+correcto) — pero no se usa para ninguna cifra reportada. Se agregó advertencia en
+el notebook junto a su definición para evitar uso accidental futuro.
+
+**Con este cierre, los 5 pendientes técnicos identificados hoy quedan resueltos:**
+#1 (falsa alarma), #2 (bruta/exportada, confirmado sin impacto en emisiones/social),
+#4 (cobertura rural, validado externamente), más barrido_fit (corregido) y §43.3
+(costo cogeneración A, resuelto como sensibilidad).

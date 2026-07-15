@@ -1,0 +1,97 @@
+============================================================
+A) DATAFRAMES CON LAS COLUMNAS QUE USA costo_oportunidad()
+============================================================
+
+----- df_sost_e2 -----
+Columnas: ['punto', 'generacion_GWh', 'excedente_GWh', 'capex_total_MUSD', 'lcoe_USD_kWh', 'emisiones_evitadas_tCO2', 'viviendas_rurales', 'f1_beneficio_USD', 'beneficio_neto_total_USD', 'pct_pot']
+Coincide con objetivo: {'beneficio_neto_total_USD', 'emisiones_evitadas_tCO2', 'generacion_GWh'}
+   punto  generacion_GWh  excedente_GWh  capex_total_MUSD  lcoe_USD_kWh  emisiones_evitadas_tCO2  viviendas_rurales  f1_beneficio_USD  beneficio_neto_total_USD    pct_pot
+0      0      147.476939     130.684279         48.240996      0.046600             21353.811143      377457.601870      9.902092e+06              7.241802e+06  91.249492
+1      1      148.956903     132.164244         48.882894      0.046751             21595.637391      381732.209110      9.852040e+06              7.191750e+06  92.165202
+2      2      150.320216     133.527556         49.462959      0.046876             21818.402642      385669.887333      9.807534e+06              7.147243e+06  93.008734
+
+----- df_sost -----
+Columnas: ['punto', 'generacion_GWh', 'excedente_GWh', 'capex_total_MUSD', 'lcoe_USD_kWh', 'emisiones_evitadas_tCO2', 'viviendas_rurales', 'f1_beneficio_USD', 'beneficio_neto_total_USD', 'pct_cobertura_rural', 'pct_cobertura_rural_techo', 'viviendas_rurales_techo', 'pct_demanda_departamental', 'pct_pot']
+Coincide con objetivo: {'beneficio_neto_total_USD', 'emisiones_evitadas_tCO2', 'generacion_GWh'}
+   punto  generacion_GWh  excedente_GWh  capex_total_MUSD  lcoe_USD_kWh  emisiones_evitadas_tCO2  viviendas_rurales  f1_beneficio_USD  beneficio_neto_total_USD  pct_cobertura_rural  pct_cobertura_rural_techo  viviendas_rurales_techo  pct_demanda_departamental    pct_pot
+0      0      189.454778     170.045131         95.080436      0.071495             27785.374457      491144.214933      8.202233e+06              4.156714e+06           561.205054                      100.0                  87516.0                   6.997742  76.062724
+1      1      215.285978     195.876331        106.378833      0.070393             32006.192537      565752.904675      8.179939e+06              4.134420e+06           646.456539                      100.0                  87516.0                   8.060754  86.433491
+2      2      215.285978     195.876331        106.378833      0.070393             32006.192537      565752.904675      8.179939e+06              4.134420e+06           646.456539                      100.0                  87516.0                   8.060754  86.433491
+
+============================================================
+B) FUNCIONES QUE CONSTRUYEN ESE DATAFRAME O LLAMAN costo_oportunidad
+============================================================
+
+----- linea -----
+def linea(nombre, f):
+    print(f"{nombre:18s}: {f['generacion_GWh']:6.1f} GWh ({f['generacion_GWh']/pot_max*100:5.1f}%) | "
+          f"${f['beneficio_neto_total_USD']:>12,.0f} | LCOE ${f['lcoe_USD_kWh']:.4f} | "
+          f"{f['emisiones_evitadas_tCO2']:>8,.0f} tCO2 | {f['viviendas_rurales']:>9,.0f} viv.")
+
+
+----- puntos_notables -----
+def puntos_notables(df, nombre):
+    b = df['beneficio_neto_total_USD'].values
+    pot_max = df['generacion_GWh'].iloc[-1]
+    opt  = df.iloc[df['beneficio_neto_total_USD'].idxmax()]
+    lcoe = df.iloc[df['lcoe_USD_kWh'].idxmin()]
+    tot  = df.iloc[-1]
+
+    print(f"\n=== {nombre} ===")
+    for et, f in [("Óptimo privado", opt), ("LCOE mínimo", lcoe), ("Despliegue total", tot)]:
+        print(f"{et:18s}: {f['generacion_GWh']:6.1f} GWh ({f['generacion_GWh']/pot_max*100:5.1f}%) | "
+              f"${f['beneficio_neto_total_USD']:>12,.0f} | LCOE ${f['lcoe_USD_kWh']:.4f} | "
+              f"{f['emisiones_evitadas_tCO2']:>8,.0f} tCO2")
+
+    if np.any(np.sign(b) != np.sign(b[0])):
+        print(">> Existe punto de equilibrio.")
+    else:
+        print(f">> Rentable en TODO el frente (mínimo ${b.min():,.0f}/año) — sin subsidio.")
+
+    costo = opt['beneficio_neto_total_USD'] - tot['beneficio_neto_total_USD']
+    d_co2 = tot['emisiones_evitadas_tCO2'] - opt['emisiones_evitadas_tCO2']
+    print(f">> Costo de desplegar el 100%: ${costo:,.0f}/año "
+          f"({costo/opt['beneficio_neto_total_USD']*100:.0f}% del óptimo) | "
+          f"${costo/d_co2:,.0f} por tCO2 adicional evitada")
+    return opt, tot
+
+
+----- costo_oportunidad -----
+def costo_oportunidad(df, nombre):
+    opt = df.iloc[df['beneficio_neto_total_USD'].idxmax()]
+    tot = df.iloc[-1]
+
+    co    = opt['beneficio_neto_total_USD'] - tot['beneficio_neto_total_USD']
+    d_co2 = tot['emisiones_evitadas_tCO2']  - opt['emisiones_evitadas_tCO2']
+    d_gwh = tot['generacion_GWh']           - opt['generacion_GWh']
+    implicito = co / d_co2
+
+    print(f"\n=== {nombre} ===")
+    print(f"Óptimo privado    : {opt['generacion_GWh']:6.1f} GWh "
+          f"({opt['generacion_GWh']/tot['generacion_GWh']*100:5.1f}%) | ${opt['beneficio_neto_total_USD']:>11,.0f}/año")
+    print(f"Despliegue 100%   : {tot['generacion_GWh']:6.1f} GWh (100.0%) | ${tot['beneficio_neto_total_USD']:>11,.0f}/año")
+    print(f">> Ambos POSITIVOS: el despliegue total NO requiere subsidio.")
+    print(f">> Costo de oportunidad: ${co:,.0f}/año ({co/opt['beneficio_neto_total_USD']*100:.0f}% del óptimo)")
+    print(f">> Compra: +{d_gwh:.1f} GWh/año y +{d_co2:,.0f} tCO2eq/año")
+    print(f">> Costo implícito: ${implicito:,.0f} por tCO2eq adicional evitada")
+
+    return {'escenario': nombre,
+            'gen_optimo_GWh': opt['generacion_GWh'],
+            'pct_optimo': opt['generacion_GWh']/tot['generacion_GWh']*100,
+            'beneficio_optimo_USD': opt['beneficio_neto_total_USD'],
+            'gen_total_GWh': tot['generacion_GWh'],
+            'beneficio_total_USD': tot['beneficio_neto_total_USD'],
+            'costo_oportunidad_USD': co,
+            'pct_del_optimo': co/opt['beneficio_neto_total_USD']*100,
+            'delta_GWh': d_gwh,
+            'delta_tCO2': d_co2,
+            'tCO2_totales_100pct': tot['emisiones_evitadas_tCO2'],
+            'costo_implicito_USD_tCO2': implicito}
+
+
+============================================================
+C) TODOS LOS NOMBRES QUE CONTIENEN 'resumen' o 'tabla'
+============================================================
+construir_tabla_impacto_social (function)
+resumen (DataFrame)
+tabla_a1 (DataFrame)
