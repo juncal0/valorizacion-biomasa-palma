@@ -287,15 +287,57 @@ la señal de precio funciona; si es (b), solo la escala/hub; si es (c), nada de 
 energética lo mueve).
 **Prioridad:** opcional. Hacerlo si el tiempo alcanza tras 1 y 4.
 
+## 43.3 (RESUELTO) — Costo de cogeneración con vapor de Planta A
+
+**Decisión final:** se abandona la idea de un único caso base y se reporta como
+**análisis de sensibilidad**, usando el rango empírico de Chávez et al. (2026,
+Revista Palmas 46(4), Cenipalma) — benchmarking de 23 plantas colombianas (30% del
+sector), año 2024, Tabla 9: costo de autogeneración con turbinas de vapor =
+21 (mín) – 204.8 (promedio, n=6 plantas) – 543.3 (máx) COP/kWh.
+
+**Por qué se prefiere sobre un único valor:** ni UPME (258, calculadora genérica)
+ni Entrepalmas (90, una sola planta) son representativos por sí solos. Ambos caen
+dentro del rango real reportado por Cenipalma (percentiles ~45% y ~13%
+respectivamente) — se retienen como puntos de referencia cruzada, no como
+candidatos a caso base.
+
+**Impacto en el veredicto de Planta A (Análisis 1, §50, punto 100% de despliegue):**
+en 3 de 5 puntos del rango (incluido el promedio sectorial) A NO es rentable en
+Esc.1; solo en el cuartil superior (UPME, máximo observado) lo es. El agregado del
+Esc.1 se mantiene positivo en TODO el rango (cae entre $1.47M y $2.56M) — el
+titular del artículo ("rentable sin subsidio") es robusto a esta incertidumbre.
+
+**Mecanismo (por qué importa la dirección):** un costo de cogeneración existente
+más bajo para A implica un "costo evitado" más bajo, lo que reduce el valor
+marginal de la inversión NUEVA del Escenario 1 — A ya captura la parte barata con
+su infraestructura actual. Es la razón por la que A queda rezagada en varios
+puntos del rango, de forma consistente con el hallazgo de la Sección 32.4/779.
+
+**Pendiente técnico:** falta correr la Sección 25 del notebook (barrido completo
+del óptimo económico, frente de Pareto, barrido_fit y LCOE neto sobre este mismo
+rango) — el punto de 100% es invariante a este precio (capacidades fijas por
+disponibilidad de biomasa), pero el óptimo económico y todo punto intermedio del
+frente SÍ dependen del precio y requieren re-optimización.
+
+**Alcance:** este hallazgo aplica SOLO a Planta A. Planta D tiene cogeneración
+existente con BIOGÁS (no vapor, Sec. 8.1) — su costo evitado usa una fuente
+distinta y queda como pendiente separado (ver Tabla 9 de la misma fuente,
+"Quema de biogás": 180–306.3–465.1 COP/kWh, ya usado hoy para validar el precio
+de biogás del Esc.2, dentro de rango).
+
+**Fuente:** Chávez, N., Benavides, E., Calderón, C., Cala, S., & Mosquera-Montoya, M.
+(2026). Costos de procesamiento de RFF y extracción de aceite de palma en plantas
+extractoras colombianas para el año 2024. Palmas, 46(4), 66-85.
+DOI: 10.56866/01212923.14507
+
+
+
 ### PENDIENTES ANTES DE REESCRIBIR EL TEXTO
-1. **Unificar `f1_beneficio_neto_total_USD`:** el de `df_pareto` NO resta el O&M del CAPEX
-   fijo ($709,941/año); el de la Sección 19b SÍ. Usar el de 19b. (Por eso la Sección 20 daba
-   $4,866,656 y la 19b $4,156,714.)
-2. **Verificar el impuesto al carbono vigente 2026** (usado: COP 25,000/tCO2 = $7.49, TRM 3,339.65).
+
 3. **`f2_generacion` = potencia BRUTA** vs. energía exportada (emisiones y viviendas se
    calculan sobre exportada). Puede mover el frente.
 4. **Denominador de cobertura rural** (561–758%).
-5. Secciones 21 (incentivos) y 22 (FiT): rotas. La 22 pierde sentido — ya no hay brecha.
+
 
 ### A REESCRIBIR
 Results and Discussion (completo), Abstract, título, highlights, cover letter, notas §43–§49.

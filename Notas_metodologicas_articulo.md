@@ -1484,3 +1484,39 @@ incluir el O&M fijo en `capex_fijo`. Validado: beneficio_despliegue_total_USD @0
 3. Costo de forzar el 100% (beneficio_libre − beneficio_despliegue_total) a precio
    actual: 14% del beneficio libre en Esc.1, 13% en Esc.2; cae a ~1% cuando el precio
    sube lo suficiente para que el óptimo privado ya casi coincida con el 100%.
+
+## 52. Análisis 6 — ¿Vale la pena la actualización tecnológica para plantas que ya autogeneran? (A y D)
+
+**Pregunta:** para las dos plantas con cogeneración propia existente (A: vapor 79.1%;
+D: biogás 70%, §8.1), ¿la inversión en el escenario nuevo (Esc.1 para A, Esc.2 para D)
+crea valor, o el ahorro marginal es demasiado pequeño frente a lo que ya ahorran?
+
+**Método:** sensibilidad del beneficio neto (100% despliegue, capacidades invariantes
+al precio — ver §50) al costo real de la tecnología existente de cada planta, usando
+el rango empírico de Chávez et al. (2026, Cenipalma) — turbinas de vapor para A,
+quema de biogás para D.
+
+**Resultado:**
+
+| Planta | Tecnología existente | Rango real (COP/kWh) | Beneficio 100% en el rango | Veredicto |
+|---|---|---|---|---|
+| D (Esc.2) | Biogás | 180 – 465.1 | +$693,976 a +$1,007,399 | Rentable en TODO el rango — robusto |
+| A (Esc.1) | Vapor | 21 – 543.3 | −$435,200 a +$647,815 | Cruza cero DENTRO del rango — incierto |
+
+**Hallazgo:** la actualización tecnológica es claramente recomendable para D en
+cualquier escenario de costo real observado en el sector. Para A, el veredicto
+depende de qué tan eficiente sea su sistema de cogeneración actual — con el
+promedio sectorial (204.8 COP/kWh) la actualización NO se justifica.
+
+**Mecanismo:** no es el costo absoluto de la tecnología existente lo que decide,
+sino la comparación entre ese costo evitado y el margen que ofrece la tecnología
+NUEVA. Esc.2 (biogás/contrapresión) tiene un margen estructuralmente amplio — su
+beneficio nunca cruza cero en el rango técnico explorado (§38) — por lo que tolera
+cualquier supuesto razonable sobre el costo evitado de D. Esc.1 (extracción-
+condensación) sí tiene un punto de equilibrio real (~57% del potencial, §38), lo
+que lo hace sensible a este mismo tipo de supuesto para A.
+
+**Implicación para el artículo:** además de ser más rentable, más equitativo (§50)
+y más robusto al precio de bolsa (§51), Escenario 2 es también más robusto a la
+incertidumbre sobre la tecnología existente de las plantas que ya autogeneran.
+Cuarto eje de ventaja de la ruta de biogás sobre la ruta de vapor.

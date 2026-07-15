@@ -245,10 +245,11 @@ El resultado corregido es **consistente con la evidencia de campo**: explica por
 
 **La recomendación de presentación bruto/neto (Sección 28.6) sigue plenamente vigente:** reportar el bruto como cifra principal (evita que un LCOE negativo sea malinterpretado por revisores) y el neto como análisis complementario del valor de los co-productos.
 
+
 ---
 
 ## 43. Pendientes derivados de estas correcciones
 
 1. **`f2_generacion` mide potencia BRUTA en bornes**, no energía neta exportada. Como es el eje del frente de Pareto y el proxy de los pilares ambiental y social, o se renombra explícitamente ("generación bruta") o se cambia a energía neta. **Riesgo:** un revisor puede objetar que las emisiones evitadas y las viviendas beneficiadas se calculan sobre energía *exportada*, no sobre generación bruta.
 2. **Indicador de cobertura rural:** da 561–758% en el frente actual. Aunque ya hay techo aplicado, conviene revisar si el denominador (demanda rural departamental) es el adecuado o debe reformularse.
-3. **Costo de cogeneración con vapor:** se usa 258 COP/kWh (UPME) pero Entrepalmas (planta real) reporta **90 COP/kWh** (2.9× menor). Afecta el precio ponderado de Plantas A y D, y por tanto el LCOE neto y la Fase 2. **Decisión pendiente.**
+
