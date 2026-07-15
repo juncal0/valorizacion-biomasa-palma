@@ -1461,6 +1461,10 @@ exacto 0.07 el beneficio corregido (Esc.1: $1,901,235) coincide al peso con el c
 analítico independiente de §51 al mismo precio. **Pendiente:** decidir si corregir
 barrido_fit() en el notebook fuente o dejar la corrección solo en el análisis.
 
+**Corrección aplicada (fecha de hoy):** se parcheó `barrido_fit()` en el notebook para
+incluir el O&M fijo en `capex_fijo`. Validado: beneficio_despliegue_total_USD @0.07
+= 1,901,235 (Esc.1), coincide con el cálculo analítico independiente de §51.
+
 **Resultado — % del potencial elegido libremente por el óptimo privado:**
 
 | Precio bolsa | Esc.1 | Esc.2 |
