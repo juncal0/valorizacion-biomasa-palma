@@ -1,0 +1,27 @@
+============================================================
+A) df_biomasa_disponible completo
+============================================================
+Columnas: ['Cuesco', 'Fibra', 'Raquis']
+               Cuesco  Fibra  Raquis
+Planta                              
+Planta A  1800.000000   3690    7290
+Planta B  1648.108632   5000    9000
+Planta C  1350.000000   3810    6870
+Planta D  1368.085881   2976    4464
+Planta E  1094.375596   3930    7302
+Planta F  1399.792853   2540    4270
+
+============================================================
+B) capacidades (t RFF/h por planta)
+============================================================
+{'Planta A': 30, 'Planta B': 40, 'Planta C': 30, 'Planta D': 24, 'Planta E': 30, 'Planta F': 20}
+
+============================================================
+C) horas_operacion_anual y fruto_procesado_anual_t
+============================================================
+horas_operacion_anual: {'Planta A': 5105, 'Planta B': 5155, 'Planta C': 5920, 'Planta D': 5496, 'Planta E': 3147, 'Planta F': 1931}
+fruto_procesado_anual_t: {'Planta A': 153150, 'Planta B': 206200, 'Planta C': 177600, 'Planta D': 131904, 'Planta E': 94410, 'Planta F': 38620}
+
+============================================================
+D) Consumo/generacion de POME por planta (si existe df separado)
+============================================================

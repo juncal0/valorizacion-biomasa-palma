@@ -1,0 +1,37 @@
+============================================================
+A) Funcion biogas_pome -- fuente del caudal de POME
+============================================================
+def biogas_pome(planta):
+    dqo_carga_kg_h = DQO_ENTRADA_mg_L[planta] * efluente_L_h[planta] / 1e6  # mg/L * L/h -> kg/h
+    metano_Nm3_h = dqo_carga_kg_h * PARAM_DIGESTION_ANAEROBICA['disponibilidad_biogas_POME_Nm3_kgDQO']
+
+    energia_termica_kWth = metano_Nm3_h * LHV_CH4_kWh_Nm3
+    generacion_bruta_kW = energia_termica_kWth * EFIC_GENERADOR_BIOGAS_BRUTA
+    autoconsumo_kW = metano_Nm3_h * PARAM_DIGESTION_ANAEROBICA['consumo_electricidad_kWh_Nm3_CH4']
+    generacion_neta_kW = generacion_bruta_kW - autoconsumo_kW
+
+    return {'metano_Nm3_h': metano_Nm3_h, 'generacion_bruta_kW': generacion_bruta_kW,
+            'autoconsumo_kW': autoconsumo_kW, 'generacion_neta_kW': generacion_neta_kW}
+
+
+============================================================
+B) POME por planta (m3/h o t/h, buscando variables/dicts)
+============================================================
+
+----- efluente_L_h (dict) -----
+{'Planta A': 18000, 'Planta B': 24000, 'Planta C': 18000, 'Planta D': 14400, 'Planta E': 18000, 'Planta F': 12000}
+
+============================================================
+C) POME calculado directamente por planta via biogas_pome()
+============================================================
+Planta A: {'metano_Nm3_h': 469.3248, 'generacion_bruta_kW': 1866.0354048, 'autoconsumo_kW': 106.5367296, 'generacion_neta_kW': 1759.4986752}
+Planta B: {'metano_Nm3_h': 821.3268, 'generacion_bruta_kW': 3265.5953568000004, 'autoconsumo_kW': 186.44118360000002, 'generacion_neta_kW': 3079.1541732000005}
+Planta C: {'metano_Nm3_h': 576.9099, 'generacion_bruta_kW': 2293.7937624, 'autoconsumo_kW': 130.9585473, 'generacion_neta_kW': 2162.8352151}
+Planta D: {'metano_Nm3_h': 619.78392, 'generacion_bruta_kW': 2464.26086592, 'autoconsumo_kW': 140.69094984, 'generacion_neta_kW': 2323.56991608}
+Planta E: {'metano_Nm3_h': 613.2293999999999, 'generacion_bruta_kW': 2438.2000943999997, 'autoconsumo_kW': 139.2030738, 'generacion_neta_kW': 2298.9970206}
+Planta F: {'metano_Nm3_h': 398.8488, 'generacion_bruta_kW': 1585.8228288, 'autoconsumo_kW': 90.5386776, 'generacion_neta_kW': 1495.2841512}
+
+============================================================
+D) Confirmar autogeneracion actual: B, C, E, F 100% red?
+============================================================
+pct_autogenerado_LB = {'Planta A': 79.12791279127914, 'Planta B': 0.0, 'Planta C': 0.0, 'Planta D': 69.99999999999999, 'Planta E': 0.0, 'Planta F': 0.0}
