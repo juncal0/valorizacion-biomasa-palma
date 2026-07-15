@@ -1,0 +1,202 @@
+============================================================
+A) FUNCIONES DE EMISIONES / INDICADORES SOCIALES
+============================================================
+
+----- df_factores_emision (DataFrame) -----
+
+----- FACTOR_CO2_DIESEL (int) -----
+= 74100
+
+----- emisiones_no_co2_biomasa (function) -----
+def emisiones_no_co2_biomasa(energia_TJ, fuente='Biomasa sólida'):
+    """Emisiones de CH4 y N2O (no-CO2), en kg CO2-eq. El CO2 biogénico no se contabiliza (convención IPCC)."""
+    fila_ch4 = df_factores_emision[(df_factores_emision['Gas']=='CH4') & (df_factores_emision['Fuente']==fuente)].iloc[0]
+    fila_n2o = df_factores_emision[(df_factores_emision['Gas']=='N2O') & (df_factores_emision['Fuente']==fuente)].iloc[0]
+    ch4_eq = energia_TJ * fila_ch4['Factor_kg_TJ'] * fila_ch4['GWP100_kgCO2eq_kg']
+    n2o_eq = energia_TJ * fila_n2o['Factor_kg_TJ'] * fila_n2o['GWP100_kgCO2eq_kg']
+    return ch4_eq + n2o_eq
+
+
+----- emisiones_diesel (function) -----
+def emisiones_diesel(energia_TJ):
+    return energia_TJ * FACTOR_CO2_DIESEL
+
+
+----- emisiones_red_nacional (function) -----
+def emisiones_red_nacional(electricidad_kWh):
+    return electricidad_kWh * FACTOR_RED_NACIONAL
+
+
+----- DEMANDA_RESIDENCIAL_RURAL_GWh (float) -----
+= 30.3
+
+----- USUARIOS_RURALES (int) -----
+= 87516
+
+----- CONSUMO_PROMEDIO_VIVIENDA_RURAL_kWh (float) -----
+= 346.22240504593447
+
+----- CONSUMO_PROMEDIO_VIVIENDA_URBANA_kWh (float) -----
+= 5215.928210880538
+
+----- viviendas_rurales_beneficiadas (function) -----
+def viviendas_rurales_beneficiadas(excedente_electrico_kWh_ano):
+    return excedente_electrico_kWh_ano / CONSUMO_PROMEDIO_VIVIENDA_RURAL_kWh
+
+
+----- personas_rurales_beneficiadas (function) -----
+def personas_rurales_beneficiadas(excedente_electrico_kWh_ano):
+    return viviendas_rurales_beneficiadas(excedente_electrico_kWh_ano) * PERSONAS_POR_HOGAR_MAGDALENA
+
+
+----- porcentaje_cobertura_rural_departamental (function) -----
+def porcentaje_cobertura_rural_departamental(excedente_electrico_kWh_ano):
+    return (excedente_electrico_kWh_ano / (DEMANDA_RESIDENCIAL_RURAL_GWh * 1_000_000)) * 100
+
+
+----- DENSIDAD_CO2_kg_Nm3 (float) -----
+= 1.977
+
+----- balance_emisiones_esc1 (function) -----
+def balance_emisiones_esc1(planta):
+    horas = horas_operacion_anual[planta]
+
+    # --- No-CO2 de combustión de biomasa sólida ---
+    energia_biomasa_kWth, _ = energia_biomasa_kWth_esc1(planta)
+    energia_biomasa_TJ_ano = energia_biomasa_kWth * horas * kWh_a_TJ
+    emisiones_biomasa = emisiones_no_co2_biomasa(energia_biomasa_TJ_ano, fuente='Biomasa sólida')
+
+    # --- No-CO2 de combustión de biogás ---
+    ch4_biogas_Nm3_h = biogas_pome(planta)['metano_Nm3_h']
+    energia_biogas_TJ_ano = ch4_biogas_Nm3_h * LHV_CH4_kWh_Nm3 * horas * kWh_a_TJ
+    emisiones_biogas = emisiones_no_co2_biomasa(energia_biogas_TJ_ano, fuente='Biogás')
+
+    # --- Diésel de respaldo (3% del consumo eléctrico propio, genset 30%) ---
+    consumo_propio_kWh_ano = consumo_electrico_esc1_kW(planta) * horas
+    elec_diesel_kWh_ano = consumo_propio_kWh_ano * FRACCION_DIESEL_RESPALDO
+    fuel_diesel_TJ_ano = (elec_diesel_kWh_ano / EFICIENCIA_GENSET_DIESEL) * kWh_a_TJ
+    emisiones_diesel_kg = emisiones_diesel(fuel_diesel_TJ_ano)
+
+    # --- Crédito por electricidad exportada (desplaza red nacional) ---
+    excedente_kWh_ano = excedente_total_esc1_kW(planta)[0] * horas
+    credito_exportacion_kg = -emisiones_red_nacional(excedente_kWh_ano)  # negativo = crédito
+
+    # --- Balance total ---
+    emisiones_proceso = emisiones_biomasa + emisiones_biogas + emisiones_diesel_kg + credito_exportacion_kg
+    balance_neto = balance_neto_GEI(emisiones_proceso, fruto_procesado_anual_t[planta])
+
+    return {'emisiones_biomasa_kg': emisiones_biomasa, 'emisiones_biogas_kg': emisiones_biogas,
+            'emisiones_diesel_kg': emisiones_diesel_kg, 'credito_exportacion_kg': credito_exportacion_kg,
+            'balance_neto_kgCO2eq_ano': balance_neto}
+
+
+----- balance_emisiones_esc2 (function) -----
+def balance_emisiones_esc2(planta):
+    horas = horas_operacion_anual[planta]
+
+    energia_biomasa_kWth = energia_biomasa_kWth_esc2(planta)
+    energia_biomasa_TJ_ano = energia_biomasa_kWth * horas * kWh_a_TJ
+    emisiones_biomasa = emisiones_no_co2_biomasa(energia_biomasa_TJ_ano, fuente='Biomasa sólida')
+
+    ch4_biogas_Nm3_h = biogas_pome_y_efb_esc2(planta)['ch4_total_Nm3_h']
+    energia_biogas_TJ_ano = ch4_biogas_Nm3_h * LHV_CH4_kWh_Nm3 * horas * kWh_a_TJ
+    emisiones_biogas = emisiones_no_co2_biomasa(energia_biogas_TJ_ano, fuente='Biogás')
+
+    consumo_propio_kWh_ano = consumo_electrico_esc2_kW(planta) * horas
+    elec_diesel_kWh_ano = consumo_propio_kWh_ano * FRACCION_DIESEL_RESPALDO
+    fuel_diesel_TJ_ano = (elec_diesel_kWh_ano / EFICIENCIA_GENSET_DIESEL) * kWh_a_TJ
+    emisiones_diesel_kg = emisiones_diesel(fuel_diesel_TJ_ano)
+
+    excedente_kWh_ano = excedente_total_esc2_kW(planta)[0] * horas
+    credito_exportacion_kg = -emisiones_red_nacional(excedente_kWh_ano)
+
+    emisiones_proceso = emisiones_biomasa + emisiones_biogas + emisiones_diesel_kg + credito_exportacion_kg
+    balance_neto = balance_neto_GEI(emisiones_proceso, fruto_procesado_anual_t[planta])
+
+    return {'emisiones_biomasa_kg': emisiones_biomasa, 'emisiones_biogas_kg': emisiones_biogas,
+            'emisiones_diesel_kg': emisiones_diesel_kg, 'credito_exportacion_kg': credito_exportacion_kg,
+            'balance_neto_kgCO2eq_ano': balance_neto}
+
+
+----- intensidad_emisiones (function) -----
+def intensidad_emisiones(emisiones_kg_ano, energia_kWh_ano):
+    """Intensidad de emisiones en gCO2eq/kWh, a partir de emisiones anuales 
+    (kg CO2-eq/año) y energía exportada anual (kWh/año)."""
+    return emisiones_kg_ano * 1000 / energia_kWh_ano
+
+
+----- balance_emisiones_solo_energia_esc1 (function) -----
+def balance_emisiones_solo_energia_esc1(planta):
+    r = balance_emisiones_esc1(planta)
+    return r['emisiones_biomasa_kg'] + r['emisiones_biogas_kg'] + r['emisiones_diesel_kg'] + r['credito_exportacion_kg']
+
+
+----- balance_emisiones_solo_energia_esc2 (function) -----
+def balance_emisiones_solo_energia_esc2(planta):
+    r = balance_emisiones_esc2(planta)
+    return r['emisiones_biomasa_kg'] + r['emisiones_biogas_kg'] + r['emisiones_diesel_kg'] + r['credito_exportacion_kg']
+
+
+----- emisiones_energia (float64) -----
+= -873123.3034115118
+
+----- d_co2 (float64) -----
+= 9742.277137322188
+
+----- PRECIO_CARBONO_USD_tCO2 (float) -----
+= 7.48581438174659
+
+============================================================
+B) COLUMNAS DE df_pareto (frente agregado, Sec. 19/20)
+============================================================
+Columnas: ['punto', 'epsilon_GWh', 'f1_beneficio_USD', 'f2_generacion_GWh', 'factor_util_promedio', 'factor_util_biogas_promedio', 'capacidad_turbina_total_MW', 'capacidad_biogas_total_MW', 'f1_beneficio_neto_total_USD']
+   punto  epsilon_GWh  f1_beneficio_USD  f2_generacion_GWh  factor_util_promedio  factor_util_biogas_promedio  capacidad_turbina_total_MW  capacidad_biogas_total_MW  f1_beneficio_neto_total_USD
+0      0   189.454778      8.202233e+06         189.454778              0.515419                          1.0                        23.9                       17.0                 4.866656e+06
+1      1   195.417004      8.179939e+06         215.285978              0.667160                          1.0                        28.6                       17.0                 4.844362e+06
+2      2   201.379230      8.179939e+06         215.285978              0.667160                          1.0                        28.6                       17.0                 4.844362e+06
+
+============================================================
+C) CELDA QUE CONSTRUYE df_pareto (buscar generacion_GWh/emisiones)
+============================================================
+
+----- correr_frente -----
+def correr_frente(escenario, incentivo):
+    """Corre el e-constraint con el CAPEX reducido por 'incentivo' (0-1)
+    y devuelve (generacion_optimo_GWh, beneficio_optimo, gen_equilibrio_GWh,
+    pct_equilibrio, beneficio_despliegue_total)."""
+    global CAPEX_TURBINA_ESC1, CAPEX_TURBINA_ESC2, CAPEX_UNIDAD_BIOGAS
+
+    f = 1 - incentivo
+    CAPEX_TURBINA_ESC1  = {k: v * f for k, v in _ORIG['t1'].items()}
+    CAPEX_TURBINA_ESC2  = {k: v * f for k, v in _ORIG['t2'].items()}
+    CAPEX_UNIDAD_BIOGAS = _ORIG['bio'] * f
+    capex_fijo_anual = (_ORIG['fijo_e1'] if escenario == 1 else _ORIG['fijo_e2']) * f
+
+    constructor = construir_modelo_f2 if escenario == 1 else construir_modelo_f2_esc2
+    f2_ini = f2_en_f1max if escenario == 1 else f2_en_f1max_e2
+    f2_fin = f2_max      if escenario == 1 else f2_max_e2
+
+    gen, ben = [], []
+    for n in range(q + 1):
+        eps = f2_ini + n * (f2_fin - f2_ini) / q
+        m = constructor(objetivo='economico', restriccion_f2=eps)
+        r = solver.solve(m, tee=False)
+        if r.solver.termination_condition == pyo.TerminationCondition.optimal:
+            gen.append(pyo.value(m.f2_generacion) / 1e6)
+            ben.append(pyo.value(m.f1_economico) - capex_fijo_anual)
+
+    gen, ben = np.array(gen), np.array(ben)
+    i_opt = ben.argmax()
+    pot_max = gen[-1]
+
+    # Punto de equilibrio (interpolación lineal donde el beneficio cruza cero)
+    cruces = np.where(np.diff(np.sign(ben)))[0]
+    if len(cruces) == 0:
+        gen_eq, pct_eq = (np.nan, np.nan) if ben[-1] < 0 else (pot_max, 100.0)
+    else:
+        i = cruces[0]
+        frac = ben[i] / (ben[i] - ben[i+1])
+        gen_eq = gen[i] + frac * (gen[i+1] - gen[i])
+        pct_eq = gen_eq / pot_max * 100
+
+    return gen[i_opt], ben[i_opt], gen_eq, pct_eq, ben[-1]

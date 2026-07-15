@@ -1520,3 +1520,58 @@ que lo hace sensible a este mismo tipo de supuesto para A.
 y más robusto al precio de bolsa (§51), Escenario 2 es también más robusto a la
 incertidumbre sobre la tecnología existente de las plantas que ya autogeneran.
 Cuarto eje de ventaja de la ruta de biogás sobre la ruta de vapor.
+
+## 53. Pendiente #2 (parcial) — f2_generacion bruta vs. energía exportada
+
+**Hallazgo clave (resuelve el riesgo principal):** el autoconsumo_kWh es UNA CONSTANTE
+en todo el frente de Pareto, en ambos escenarios (verificado: idéntico en punto 0 y
+punto 10, e idéntico al tope técnico consumo_medido×horas). Esto ocurre porque incluso
+el óptimo económico (punto más bajo del frente) ya despliega capacidad suficiente para
+cubrir el autoconsumo de las 6 plantas.
+
+**Consecuencia:** "generación exportada" = "generación bruta" − constante (19.41 GWh
+Esc.1, 16.79 GWh Esc.2). Es un CORRIMIENTO, no una recomputación — el frente de Pareto
+NO cambia de forma, solo de escala en el eje.
+
+**Resuelto (no requiere solver):**
+- Beneficio neto, LCOE: sin cambio (ya se calculan sobre excedente_kW, confirmado en
+  el código de lcoe_escenario()).
+- % de "potencial desplegado" reportado en el texto: cambia ~2 puntos porcentuales
+  (Esc.1: 76.1%→74.0%; Esc.2: 91.2%→90.2%). Actualizar en Results, no cambia conclusión.
+
+**Pendiente de confirmar (Sección 25c del notebook, en curso):** si `emisiones_evitadas_tCO2`
+en df_pareto (la que alimenta los $225/$392 por tCO2 de la tabla RESULTADOS DEFINITIVOS)
+está calculada sobre generación bruta o sobre exportada. Si es bruta, ESOS DOS NÚMEROS
+SÍ se mueven (a diferencia de todo lo demás en esta sección).
+
+## 53. Pendiente #2 (CERRADO) — f2_generacion bruta vs. energía exportada
+
+**Resolución final:** confirmado en código que emisiones evitadas
+(balance_emisiones_esc1/esc2, vía excedente_total_escX_kW) y los indicadores
+sociales (viviendas/personas rurales, cobertura rural) YA estaban calculados
+sobre energía EXPORTADA, no bruta. No requieren corrección.
+
+**Único cambio real:** los porcentajes de "% del potencial desplegado" citados en
+Results (Secciones 19/19b), que sí usan f2_generacion (bruta). Como el autoconsumo
+es una CONSTANTE en todo el frente (19.41 GWh Esc.1, 16.79 GWh Esc.2 — verificado:
+idéntico en punto 0 y punto 10), la correccion es un corrimiento, no un rehacer:
+
+| | Bruta (como está hoy) | Exportada (corregido) |
+|---|---|---|
+| Esc.1 óptimo económico | 76.1% | **74.0%** |
+| Esc.2 óptimo económico | 91.2% | **90.2%** |
+
+El frente de Pareto NO cambia de forma. Ningún resultado económico (beneficio,
+LCOE) se mueve.
+
+**Hallazgo colateral (alimenta el pendiente #4):** el 758% de cobertura rural
+implausible se confirma que viene de excedente_exportado_max / DEMANDA_RESIDENCIAL_RURAL_GWh
+(=30.3 GWh) — el numerador SIEMPRE fue correcto (exportada); el problema está en
+el denominador (30.3 GWh parece demasiado pequeño para todo el departamento).
+Pendiente separado, no ligado a bruta/exportada.
+
+**Queda abierto:** costo_oportunidad() (Sección 20, los $225/$392 por tCO2) opera
+sobre un dataframe con columnas 'generacion_GWh'/'emisiones_evitadas_tCO2' que
+NO es df_pareto directamente — no se pudo verificar su fuente en esta sesión.
+Probablemente correcto (dado que balance_emisiones_escX sí lo está), pero sin
+confirmar.
