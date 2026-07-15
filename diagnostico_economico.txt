@@ -1,0 +1,392 @@
+============================================================
+1) NOMBRES ECONOMICOS EN EL ENTORNO
+============================================================
+CAPEX_TURBINA_ESC1                     -> dict
+CAPEX_TURBINA_ESC2                     -> dict
+CAPEX_UNIDAD_BIOGAS                    -> float
+CONSUMO_ESPECIFICO_ESTERILIZACION_CONTINUA -> int
+CONSUMO_PROMEDIO_VIVIENDA_RURAL_kWh    -> float
+CONSUMO_PROMEDIO_VIVIENDA_URBANA_kWh   -> float
+PRECIO_BOLSA_PROMEDIO                  -> float
+PRECIO_CARBONO_USD_tCO2                -> float
+PRECIO_ELECTRICIDAD_COMPRA_dict        -> dict
+PRECIO_ELECTRICIDAD_VENTA              -> float
+PRECIO_MF                              -> int
+PRECIO_PKS                             -> int
+PRECIO_TRAMO_12_dict                   -> dict
+PVAF                                   -> float
+PVAF_MOD                               -> float
+TRM_COP_USD                            -> float
+anualizado_mas_om                      -> float64
+autoconsumo_pct                        -> float
+barrido_fit                            -> function
+beneficio_esperado_19b                 -> int
+beneficio_max_pareto                   -> float
+beneficio_neto_optimo_economico_e1     -> float64
+beneficio_neto_optimo_generacion_e1    -> float64
+capex_biogas                           -> float64
+capex_cogeneracion_usd_kw              -> function
+capex_fijo                             -> float64
+capex_fijo_anualizado_total            -> float64
+capex_fijo_anualizado_total_esc1       -> float64
+capex_fijo_esc1                        -> function
+capex_fijo_esc1_dict                   -> dict
+capex_fijo_esc2                        -> function
+capex_fijo_esc2_dict                   -> dict
+capex_fijo_total                       -> float64
+capex_fijo_total_e2                    -> float64
+capex_incremental_esc1                 -> function
+capex_incremental_esc2                 -> function
+capex_total                            -> float64
+capex_turbinas                         -> float
+capex_variable                         -> float64
+capex_variable_esc1                    -> function
+capex_variable_esc2                    -> function
+consumo                                -> float64
+consumo_e2_dict                        -> dict
+consumo_elec_total                     -> float64
+consumo_electrico_LB                   -> Series
+consumo_electrico_esc1_kW              -> function
+consumo_electrico_esc2_kW              -> function
+consumo_electrico_esterilizacion_LB    -> Series
+consumo_medido_dict                    -> dict
+consumo_medido_esc2_dict               -> dict
+consumo_total_LB                       -> dict
+costo_oportunidad                      -> function
+costo_oportunidad_biomasa_anual        -> function
+df_capex                               -> DataFrame
+df_fit1                                -> DataFrame
+df_fit2                                -> DataFrame
+df_pareto                              -> DataFrame
+df_pareto_e2                           -> DataFrame
+df_pareto_plantas                      -> DataFrame
+df_pareto_plantas_e2                   -> DataFrame
+f1_en_f2max                            -> float64
+f1_en_f2max_e2                         -> float64
+f1_max                                 -> float64
+f1_max_e2                              -> float64
+f2_en_f1max                            -> float
+f2_en_f1max_e2                         -> float
+frente_pareto                          -> list
+frente_pareto_e2                       -> list
+lcoe                                   -> float64
+lcoe_bruto                             -> function
+lcoe_cop                               -> float64
+lcoe_escenario                         -> function
+opt_lcoe                               -> Series
+personas_rurales_beneficiadas          -> function
+r_consumo                              -> function
+raw_capex                              -> DataFrame
+registros_capex                        -> list
+solo_anualizado                        -> float64
+viviendas_rurales_beneficiadas         -> function
+
+============================================================
+2) CODIGO FUENTE DE FUNCIONES
+============================================================
+
+----- def barrido_fit -----
+def barrido_fit(escenario):
+    global PRECIO_BOLSA_PROMEDIO
+    constructor = construir_modelo_f2 if escenario == 1 else construir_modelo_f2_esc2
+    capex_fijo  = capex_fijo_anualizado_total_esc1 if escenario == 1 else capex_fijo_anualizado_total
+    f2_potencial = (f2_max if escenario == 1 else f2_max_e2) / 1e6
+
+    filas = []
+    for precio in np.arange(0.07, 0.26, 0.01):
+        PRECIO_BOLSA_PROMEDIO = precio
+
+        # (a) Óptimo LIBRE: ¿cuánto elige desplegar la planta a este precio?
+        m_libre = constructor(objetivo='economico')
+        solver.solve(m_libre, tee=False)
+        gen_libre = pyo.value(m_libre.f2_generacion) / 1e6
+        ben_libre = pyo.value(m_libre.f1_economico) - capex_fijo
+
+        # (b) Despliegue TOTAL forzado: ¿es rentable a este precio?
+        m_full = constructor(objetivo='economico',
+                             restriccion_f2=(f2_max if escenario == 1 else f2_max_e2))
+        solver.solve(m_full, tee=False)
+        ben_full = pyo.value(m_full.f1_economico) - capex_fijo
+
+        filas.append({
+            'precio_excedente_USD_kWh': precio,
+            'gen_elegida_GWh': gen_libre,
+            'pct_potencial_elegido': gen_libre / f2_potencial * 100,
+            'beneficio_libre_USD': ben_libre,
+            'beneficio_despliegue_total_USD': ben_full,
+        })
+
+    PRECIO_BOLSA_PROMEDIO = _PRECIO_BOLSA_ORIG   # restaurar
+    return pd.DataFrame(filas)
+
+
+----- def capex_cogeneracion_usd_kw -----
+def capex_cogeneracion_usd_kw(capacidad_kw):
+    """CAPEX específico (USD/kW) según capacidad instalada. Fuente: Malico et al. (2019). Retorna en USD 2026."""
+    valor_2019 = -900.6 * np.log(capacidad_kw) + 10841
+    return valor_2019 * factor_cepci_2019
+
+
+----- def capex_fijo_esc1 -----
+def capex_fijo_esc1(planta):
+    items = capex_incremental_esc1(planta)
+    excluir = {'Turbina', 'Generador de biogás'}   # claves de capex_incremental_esc1 (Sección 15.0)
+    return sum(v for k, v in items.items() if k not in excluir)
+
+
+----- def capex_fijo_esc2 -----
+def capex_fijo_esc2(planta):
+    """CAPEX que NO depende de la capacidad eléctrica elegida por el solver.
+    Excluye turbina y generador de biogás (son variables de decisión en Fase 2).
+    Se reutiliza capex_incremental_esc2 (Sección 15.0, ya escalado con la regla 0.6)
+    para no duplicar la lógica de costos."""
+    items = capex_incremental_esc2(planta)
+    excluir = {'Turbina', 'Generador de biogás'}
+    return sum(v for k, v in items.items() if k not in excluir)
+
+
+----- def capex_incremental_esc1 -----
+def capex_incremental_esc1(planta):
+    pot_turbina_kW = potencia_turbina_kW(planta)['potencia_bruta_kW']
+    cap_vapor_t_h  = vapor_producido_kg_h(planta) / 1000
+    flujo_efb_t_h  = df_biomasa_disponible.loc[planta, 'Raquis'] / 1000
+    r_bio          = biogas_pome(planta)
+    pot_biogas_kW  = r_bio['generacion_bruta_kW']
+    biogas_m3_h    = r_bio['metano_Nm3_h'] / 0.65          # supuesto 65% CH4
+
+    return {
+        'Turbina':                             costo_escalado(*REF['turbina_extraccion'], pot_turbina_kW),
+        'Precipitador electroestático':        costo_escalado(*REF['precipitador'], cap_vapor_t_h),
+        'Pretratamiento mecánico EFB':         costo_escalado(*REF['pretrat_mecanico'], flujo_efb_t_h),
+        'Lagunas carpadas (reactor)':          costo_escalado(*REF['lagunas_carpadas'], capacidades[planta]),
+        'Tratamiento de biogás':               costo_escalado(*REF['tratamiento_biogas'], biogas_m3_h),
+        'Generador de biogás':                 costo_escalado(*REF['generador_biogas'], pot_biogas_kW),
+        'Sustitución esterilización continua': costo_escalado(*REF['esteriliz_continua'], capacidades[planta]),
+        'Sustitución clarificación dinámica':  costo_escalado(*REF['clarif_dinamica'], capacidades[planta]),
+        'Redes e infraestructura':             COSTO_REDES_INFRA_USD_tRFF * capacidades[planta],
+    }
+
+
+----- def capex_incremental_esc2 -----
+def capex_incremental_esc2(planta):
+    pot_turbina_kW = potencia_turbina_esc2_kW(planta)['potencia_bruta_kW']
+    cap_vapor_t_h  = vapor_producido_kg_h_esc2(planta) / 1000
+    flujo_efb_t_h  = df_biomasa_disponible.loc[planta, 'Raquis'] / 1000
+    r_bio          = biogas_pome_y_efb_esc2(planta)
+    pot_biogas_kW  = r_bio['generacion_bruta_kW']
+    biogas_m3_h    = r_bio['ch4_efluente_Nm3_h'] / 0.65 + r_bio['ch4_efb_Nm3_h'] / 0.54
+
+    costo_trat_termico = (COSTO_REF_TRAT_TERMICO * factor_cepci_2019
+                          * (flujo_efb_t_h / CAP_REF_TRAT_TERMICO) ** N_ESCALAMIENTO)
+
+    return {
+        'Turbina':                            costo_escalado(*REF['turbina_contrapresion'], pot_turbina_kW),
+        'Sistema gases de combustión':        costo_escalado(*REF['gases_combustion'], cap_vapor_t_h),
+        'Tratamiento térmico EFB':            costo_trat_termico,
+        'Lagunas carpadas (reactor)':         costo_escalado(*REF['lagunas_carpadas'], capacidades[planta]),
+        'Tratamiento de biogás':              costo_escalado(*REF['tratamiento_biogas'], biogas_m3_h),
+        'Generador de biogás':                costo_escalado(*REF['generador_biogas'], pot_biogas_kW),
+        'Sustitución clarificación dinámica': costo_escalado(*REF['clarif_dinamica'], capacidades[planta]),
+        'Redes e infraestructura':            COSTO_REDES_INFRA_USD_tRFF * capacidades[planta],
+    }
+
+
+----- def capex_variable_esc1 -----
+def capex_variable_esc1(cap_turbina_kW, cap_biogas_kW):
+    """CAPEX de los equipos que el solver dimensiona, con economías de escala.
+    La turbina se busca en el catálogo; el biogás es N módulos de 1 MW."""
+    capex_t = CAPEX_TURBINA_ESC1.get(int(round(cap_turbina_kW)), 0.0)
+    n_unid  = int(round(cap_biogas_kW / TAMANO_UNIDAD_BIOGAS_KW))
+    return capex_t + n_unid * CAPEX_UNIDAD_BIOGAS
+
+
+----- def capex_variable_esc2 -----
+def capex_variable_esc2(cap_turbina_kW, cap_biogas_kW):
+    """CAPEX de los equipos que el solver dimensiona, con economías de escala.
+    La turbina se busca en el catálogo; el biogás es N módulos de 1 MW."""
+    capex_t = CAPEX_TURBINA_ESC2.get(int(round(cap_turbina_kW)), 0.0)
+    n_unid  = int(round(cap_biogas_kW / TAMANO_UNIDAD_BIOGAS_KW))
+    return capex_t + n_unid * CAPEX_UNIDAD_BIOGAS
+
+
+----- def consumo_electrico_esc1_kW -----
+def consumo_electrico_esc1_kW(planta):
+    resto = consumo_electrico_LB[planta]
+    esteriliz_continua = PARAM_ESTERILIZACION_CONTINUA['consumo_electricidad_kWh_tRFF'] * capacidades[planta]
+    clarif_dinamica    = PARAM_CLARIFICACION_DINAMICA['consumo_electricidad_kWh_tRFF'] * capacidades[planta]
+    _, elec_secador = energia_biomasa_kWth_esc1(planta)  # ya calculado en Bloque 1
+    return resto + esteriliz_continua + clarif_dinamica + elec_secador
+
+
+----- def consumo_electrico_esc2_kW -----
+def consumo_electrico_esc2_kW(planta):
+    resto = consumo_electrico_LB[planta]   # ya excluye Esterilización/Clarificación (Bloque 6, Escenario 1)
+    esteriliz_conv_elec = consumo_electrico_esterilizacion_LB[planta]
+    clarif_dinamica = PARAM_CLARIFICACION_DINAMICA['consumo_electricidad_kWh_tRFF'] * capacidades[planta]
+    flujo_efb_t_h = df_biomasa_disponible.loc[planta, 'Raquis'] / 1000
+    pretrat_termico = PARAM_PRETRATAMIENTO_TERMICO_EFB['consumo_electricidad_kWh_tEFB'] * flujo_efb_t_h
+    return resto + esteriliz_conv_elec + clarif_dinamica + pretrat_termico
+
+
+----- def costo_oportunidad -----
+def costo_oportunidad(df, nombre):
+    opt = df.iloc[df['beneficio_neto_total_USD'].idxmax()]
+    tot = df.iloc[-1]
+
+    co    = opt['beneficio_neto_total_USD'] - tot['beneficio_neto_total_USD']
+    d_co2 = tot['emisiones_evitadas_tCO2']  - opt['emisiones_evitadas_tCO2']
+    d_gwh = tot['generacion_GWh']           - opt['generacion_GWh']
+    implicito = co / d_co2
+
+    print(f"\n=== {nombre} ===")
+    print(f"Óptimo privado    : {opt['generacion_GWh']:6.1f} GWh "
+          f"({opt['generacion_GWh']/tot['generacion_GWh']*100:5.1f}%) | ${opt['beneficio_neto_total_USD']:>11,.0f}/año")
+    print(f"Despliegue 100%   : {tot['generacion_GWh']:6.1f} GWh (100.0%) | ${tot['beneficio_neto_total_USD']:>11,.0f}/año")
+    print(f">> Ambos POSITIVOS: el despliegue total NO requiere subsidio.")
+    print(f">> Costo de oportunidad: ${co:,.0f}/año ({co/opt['beneficio_neto_total_USD']*100:.0f}% del óptimo)")
+    print(f">> Compra: +{d_gwh:.1f} GWh/año y +{d_co2:,.0f} tCO2eq/año")
+    print(f">> Costo implícito: ${implicito:,.0f} por tCO2eq adicional evitada")
+
+    return {'escenario': nombre,
+            'gen_optimo_GWh': opt['generacion_GWh'],
+            'pct_optimo': opt['generacion_GWh']/tot['generacion_GWh']*100,
+            'beneficio_optimo_USD': opt['beneficio_neto_total_USD'],
+            'gen_total_GWh': tot['generacion_GWh'],
+            'beneficio_total_USD': tot['beneficio_neto_total_USD'],
+            'costo_oportunidad_USD': co,
+            'pct_del_optimo': co/opt['beneficio_neto_total_USD']*100,
+            'delta_GWh': d_gwh,
+            'delta_tCO2': d_co2,
+            'tCO2_totales_100pct': tot['emisiones_evitadas_tCO2'],
+            'costo_implicito_USD_tCO2': implicito}
+
+
+----- def costo_oportunidad_biomasa_anual -----
+def costo_oportunidad_biomasa_anual(planta):
+    horas = horas_operacion_anual[planta]
+    cuesco_t_ano = df_biomasa_disponible.loc[planta, 'Cuesco'] / 1000 * horas
+    fibra_t_ano  = df_biomasa_disponible.loc[planta, 'Fibra']  / 1000 * horas
+    return PRECIO_PKS * cuesco_t_ano + PRECIO_MF * fibra_t_ano
+
+
+----- def lcoe_bruto -----
+def lcoe_bruto(planta, capex_items, excedente_kW):
+    horas = horas_operacion_anual[planta]
+    capex_total = sum(capex_items.values())
+    excedente_kWh_ano = excedente_kW * horas
+    costo_operacion_anual = PCT_OPERACION_ANUAL * capex_total   # solo O&M, sin ingresos
+    lcoe = capex_total / (excedente_kWh_ano * PVAF) + costo_operacion_anual / excedente_kWh_ano 
+    return lcoe
+
+
+----- def lcoe_escenario -----
+def lcoe_escenario(planta, capex_items, excedente_kW, consumo_propio_kW, escenario_num):
+    horas = horas_operacion_anual[planta]
+    capex_total = sum(capex_items.values())
+
+    excedente_kWh_ano = excedente_kW * horas
+    consumo_propio_kWh_ano = consumo_propio_kW * horas
+
+    ahorro_autoconsumo = PRECIO_ELECTRICIDAD_COMPRA_dict[planta] * consumo_propio_kWh_ano
+    venta_excedente = PRECIO_ELECTRICIDAD_VENTA * excedente_kWh_ano
+
+    cuesco_t_ano = (df_biomasa_disponible.loc[planta, 'Cuesco']/1000) * horas
+    fibra_t_ano = (df_biomasa_disponible.loc[planta, 'Fibra']/1000) * horas
+    costo_oportunidad_pks_mf = PRECIO_PKS * cuesco_t_ano + PRECIO_MF * fibra_t_ano
+
+    costo_operacion_anual = PCT_OPERACION_ANUAL * capex_total
+
+    opex_neto_anual = costo_operacion_anual + costo_oportunidad_pks_mf - ahorro_autoconsumo - venta_excedente
+
+    lcoe = capex_total / (excedente_kWh_ano * PVAF) + opex_neto_anual / excedente_kWh_ano
+
+    return {'capex_total': capex_total, 'opex_neto_anual': opex_neto_anual,
+            'excedente_kWh_ano': excedente_kWh_ano, 'lcoe_USD_kWh': lcoe}
+
+
+----- def personas_rurales_beneficiadas -----
+def personas_rurales_beneficiadas(excedente_electrico_kWh_ano):
+    return viviendas_rurales_beneficiadas(excedente_electrico_kWh_ano) * PERSONAS_POR_HOGAR_MAGDALENA
+
+
+----- def r_consumo -----
+def r_consumo(m, p):
+    return m.consumo_electrico_kW[p] == m.consumo_electrico_medido[p]
+
+
+----- def viviendas_rurales_beneficiadas -----
+def viviendas_rurales_beneficiadas(excedente_electrico_kWh_ano):
+    return excedente_electrico_kWh_ano / CONSUMO_PROMEDIO_VIVIENDA_RURAL_kWh
+
+
+============================================================
+3) PARAMETROS Y DICCIONARIOS PEQUEÑOS
+============================================================
+CAPEX_TURBINA_ESC1 = {300: 2562631.868658128, 500: 3481733.069644427, 750: 4440687.661663545, 1000: 5277320.4938271595, 1500: 6730823.855481756, 2000: 7998922.0992786605, 3000: 10202021.224017087, 4000: 12124098.740102796, 5000: 13861029.009786852, 6000: 15463372.581133388, 7000: 16961813.896831267, 8000: 18376697.314381655, 9000: 19722364.252282597, 10000: 21009391.299015153}
+CAPEX_TURBINA_ESC2 = {750: 3407068.892772658, 1000: 4048966.2551440326, 1250: 4629031.808901586, 1500: 5164150.764017756, 1750: 5664570.5026418}
+CAPEX_UNIDAD_BIOGAS = 314640.9219391985
+CONSUMO_ESPECIFICO_ESTERILIZACION_CONTINUA = 315
+CONSUMO_PROMEDIO_VIVIENDA_RURAL_kWh = 346.22240504593447
+CONSUMO_PROMEDIO_VIVIENDA_URBANA_kWh = 5215.928210880538
+PRECIO_BOLSA_PROMEDIO = 0.0703
+PRECIO_CARBONO_USD_tCO2 = 7.48581438174659
+PRECIO_ELECTRICIDAD_COMPRA_dict = {'Planta A': 0.1141, 'Planta B': 0.2537, 'Planta C': 0.2572, 'Planta D': 0.153, 'Planta E': 0.2551, 'Planta F': 0.2591}
+PRECIO_ELECTRICIDAD_VENTA = 0.06
+PRECIO_MF = 8
+PRECIO_PKS = 16
+PRECIO_TRAMO_12_dict = {'Planta A': 0.1141, 'Planta B': 0.2537, 'Planta C': 0.2572, 'Planta D': 0.153, 'Planta E': 0.2551, 'Planta F': 0.2591}
+PVAF = 8.513563719758565
+PVAF_MOD = 8.513563719758565
+TRM_COP_USD = 3339.65
+anualizado_mas_om = np.float64(4045518.9342298596)
+autoconsumo_pct = 0.142
+beneficio_esperado_19b = 4156714
+beneficio_max_pareto = 4866655.765817956
+beneficio_neto_optimo_economico_e1 = np.float64(4866655.765817956)
+beneficio_neto_optimo_generacion_e1 = np.float64(2674252.911476598)
+capex_biogas = np.float64(10068509.502054352)
+capex_fijo = np.float64(28397652.60289732)
+capex_fijo_anualizado_total = np.float64(2193440.5849136636)
+capex_fijo_anualizado_total_esc1 = np.float64(3335577.619157426)
+capex_fijo_esc1_dict = {'Planta A': np.float64(4836273.040186385), 'Planta B': np.float64(5803873.790037576), 'Planta C': np.float64(4844460.059919854), 'Planta D': np.float64(4248349.316653641), 'Planta E': np.float64(4875241.441524167), 'Planta F': np.float64(3789454.9545756965)}
+capex_fijo_esc2_dict = {'Planta A': np.float64(3191370.9682812225), 'Planta B': np.float64(3835111.079167178), 'Planta C': np.float64(3189430.5266107516), 'Planta D': np.float64(2765634.554416201), 'Planta E': np.float64(3222863.0873578964), 'Planta F': np.float64(2469585.969333724)}
+capex_fijo_total = np.float64(28397652.60289732)
+capex_fijo_total_e2 = np.float64(18673996.185166974)
+capex_total = np.float64(57507288.63572967)
+capex_turbinas = 28764782.948508345
+capex_variable = np.float64(108110870.0417638)
+consumo = np.float64(324.4387668375771)
+consumo_e2_dict = {'Planta A': np.float64(751.29), 'Planta B': np.float64(632.5999999999999), 'Planta C': np.float64(645.87), 'Planta D': np.float64(477.1549811746109), 'Planta E': np.float64(833.7420000000001), 'Planta F': np.float64(324.4387668375771)}
+consumo_elec_total = np.float64(857.1335294117647)
+consumo_medido_dict = {'Planta A': np.float64(857.1335294117647), 'Planta B': np.float64(767.2117647058823), 'Planta C': np.float64(738.9476470588236), 'Planta D': np.float64(549.0283307555534), 'Planta E': np.float64(933.067411764706), 'Planta F': np.float64(388.7160212964998)}
+consumo_medido_esc2_dict = {'Planta A': np.float64(751.29), 'Planta B': np.float64(632.5999999999999), 'Planta C': np.float64(645.87), 'Planta D': np.float64(477.1549811746109), 'Planta E': np.float64(833.7420000000001), 'Planta F': np.float64(324.4387668375771)}
+consumo_total_LB = {'Planta A': 3083731.0, 'Planta B': 5398064.2, 'Planta C': 2740934.19, 'Planta D': 3746215.5999999996, 'Planta E': 2281731.0719999997, 'Planta F': 702884.0}
+f1_en_f2max = np.float64(6009830.530634024)
+f1_en_f2max_e2 = np.float64(8995253.781403512)
+f1_max = np.float64(8202233.384975382)
+f1_max_e2 = np.float64(9902091.153267689)
+f2_en_f1max = 189454778.19147176
+f2_en_f1max_e2 = 147476938.68165392
+lcoe = np.float64(0.05068985274300155)
+lcoe_cop = np.float64(276.0243492757558)
+solo_anualizado = np.float64(3335577.6191574265)
+
+============================================================
+4) SONDEO DE NOMBRES CITADOS EN LAS NOTAS
+============================================================
+f1_beneficio_neto_total_USD            -> no existe
+f1_economico                           -> no existe
+f1_max                                 -> EXISTE (float64)
+barrido_fit                            -> EXISTE (function)
+PRECIO_BOLSA_PROMEDIO                  -> EXISTE (float)
+capex_fijo_esc1                        -> EXISTE (function)
+capex_fijo_esc2                        -> EXISTE (function)
+capex_fijo_anualizado_total_esc1       -> EXISTE (float64)
+PVAF                                   -> EXISTE (float)
+TRM                                    -> no existe
+precio_electricidad                    -> no existe
+consumo_planta                         -> no existe
+consumo_kWh                            -> no existe
+costo_oportunidad_anual                -> no existe
+df_pareto_plantas                      -> EXISTE (DataFrame)
+df_pareto_plantas_e2                   -> EXISTE (DataFrame)

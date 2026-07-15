@@ -1,0 +1,167 @@
+============================================================
+A) CONSTRUCTORES DEL MODELO (objetivo f1_economico)
+============================================================
+
+----- def construir_modelo_f2 -----
+def construir_modelo_f2(objetivo='economico', restriccion_f2=None, restriccion_f1=None):
+    """objetivo: 'economico' o 'excedente'.
+       restriccion_f2/f1: valor mínimo a imponer sobre el otro objetivo (para lexicográfica y ε-constraint)."""
+    m = pyo.ConcreteModel()
+    m.PLANTAS = pyo.Set(initialize=plantas)
+    m.TAMANOS = pyo.Set(initialize=CATALOGO_TURBINA_ESC1)
+
+    m.potencia_ideal_kW = pyo.Param(m.PLANTAS, initialize=potencia_ideal_dict)
+    m.potencia_ideal_biogas = pyo.Param(m.PLANTAS, initialize=potencia_ideal_biogas_esc1_dict)
+    m.consumo_medido_kW = pyo.Param(m.PLANTAS, initialize=consumo_medido_dict)
+    m.horas = pyo.Param(m.PLANTAS, initialize=horas_operacion_anual)
+    m.costo_oport = pyo.Param(m.PLANTAS, initialize=costo_oport_dict)
+    m.precio_tramo12 = pyo.Param(m.PLANTAS, initialize=PRECIO_TRAMO_12_dict)
+    m.precio_bolsa = pyo.Param(initialize=PRECIO_BOLSA_PROMEDIO)
+    m.pvaf = pyo.Param(initialize=PVAF)
+
+    m.z = pyo.Var(m.PLANTAS, m.TAMANOS, domain=pyo.Binary)
+    m.n_unidades_biogas = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeIntegers, bounds=(0, N_MAX_UNIDADES_BIOGAS))
+    m.capacidad_turbina_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.capacidad_biogas_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.factor_utilizacion = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals, bounds=(0, 1))
+    m.factor_util_biogas = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals, bounds=(0, 1))
+    m.potencia_turbina_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.potencia_biogas_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.autoconsumo_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.excedente_permuta_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.excedente_bolsa_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+
+    m.r_una_seleccion = pyo.Constraint(m.PLANTAS, rule=lambda m, p: sum(m.z[p, k] for k in m.TAMANOS) == 1)
+    m.r_capacidad = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.capacidad_turbina_kW[p] == sum(k*m.z[p, k] for k in m.TAMANOS))
+    m.r_cap_bio = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.capacidad_biogas_kW[p] == m.n_unidades_biogas[p] * TAMANO_UNIDAD_BIOGAS_KW)
+    m.r_potencia = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_turbina_kW[p] == m.factor_utilizacion[p]*m.potencia_ideal_kW[p])
+    m.r_pot_bio = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_biogas_kW[p] == m.factor_util_biogas[p]*m.potencia_ideal_biogas[p])
+    m.r_no_exceder = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_turbina_kW[p] <= m.capacidad_turbina_kW[p])
+    m.r_no_exc_bio = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_biogas_kW[p] <= m.capacidad_biogas_kW[p])
+    m.r_reparto = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_turbina_kW[p] + m.potencia_biogas_kW[p]
+                                 == m.autoconsumo_kW[p] + m.excedente_permuta_kW[p] + m.excedente_bolsa_kW[p])
+    m.r_tope_auto = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.autoconsumo_kW[p] <= m.consumo_medido_kW[p])
+    m.r_tope_permuta = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.excedente_permuta_kW[p] <= m.consumo_medido_kW[p])
+
+    # --- Expresiones de los 2 objetivos ---
+    m.f1_economico = pyo.Expression(expr=(
+        sum(m.autoconsumo_kW[p]*m.horas[p]*m.precio_tramo12[p] for p in m.PLANTAS)
+        + sum(m.excedente_permuta_kW[p]*m.horas[p]*m.precio_tramo12[p] for p in m.PLANTAS)
+        + sum(m.excedente_bolsa_kW[p]*m.horas[p]*m.precio_bolsa for p in m.PLANTAS)
+        - sum(sum(CAPEX_TURBINA_ESC1[k]*m.z[p, k] for k in m.TAMANOS)/m.pvaf for p in m.PLANTAS)
+        - sum(m.n_unidades_biogas[p]*CAPEX_UNIDAD_BIOGAS/m.pvaf for p in m.PLANTAS)
+        # [NUEVO] O&M anual (2.5% del CAPEX variable)
+        - sum(sum(CAPEX_TURBINA_ESC1[k]*m.z[p, k] for k in m.TAMANOS)*PCT_OPERACION_ANUAL for p in m.PLANTAS)
+        - sum(m.n_unidades_biogas[p]*CAPEX_UNIDAD_BIOGAS*PCT_OPERACION_ANUAL for p in m.PLANTAS)
+        # [NUEVO] Costo de oportunidad de la biomasa quemada (escala con el uso)
+        - sum(m.factor_utilizacion[p]*m.costo_oport[p] for p in m.PLANTAS)))
+
+    m.f2_generacion = pyo.Expression(expr=sum((m.potencia_turbina_kW[p] + m.potencia_biogas_kW[p])*m.horas[p] for p in m.PLANTAS))
+
+    if restriccion_f1 is not None:
+        m.r_eps_f1 = pyo.Constraint(expr=m.f1_economico >= restriccion_f1)
+    if restriccion_f2 is not None:
+        m.r_eps_f2 = pyo.Constraint(expr=m.f2_generacion >= restriccion_f2)
+
+    if objetivo == 'economico':
+        m.obj = pyo.Objective(expr=m.f1_economico, sense=pyo.maximize)
+    else:
+        m.obj = pyo.Objective(expr=m.f2_generacion, sense=pyo.maximize)
+    return m
+
+
+----- def construir_modelo_f2_esc2 -----
+def construir_modelo_f2_esc2(objetivo='economico', restriccion_f2=None, restriccion_f1=None):
+    m = pyo.ConcreteModel()
+    m.PLANTAS = pyo.Set(initialize=plantas)
+    m.TAM_TURBINA = pyo.Set(initialize=CATALOGO_TURBINA_CONTRAPRESION)
+
+    m.potencia_ideal_turbina = pyo.Param(m.PLANTAS, initialize=potencia_ideal_turbina_esc2_dict)
+    m.potencia_ideal_biogas = pyo.Param(m.PLANTAS, initialize=potencia_ideal_biogas_esc2_dict)
+    m.consumo_medido_kW = pyo.Param(m.PLANTAS, initialize=consumo_medido_esc2_dict)
+    m.horas = pyo.Param(m.PLANTAS, initialize=horas_operacion_anual)
+    m.costo_oport = pyo.Param(m.PLANTAS, initialize=costo_oport_dict)
+    m.precio_tramo12 = pyo.Param(m.PLANTAS, initialize=PRECIO_TRAMO_12_dict)
+    m.precio_bolsa = pyo.Param(initialize=PRECIO_BOLSA_PROMEDIO)
+    m.pvaf = pyo.Param(initialize=PVAF)
+
+    m.z_turb = pyo.Var(m.PLANTAS, m.TAM_TURBINA, domain=pyo.Binary)
+    m.n_unidades_biogas = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeIntegers, bounds=(0, N_MAX_UNIDADES_BIOGAS))
+    m.capacidad_turbina_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.capacidad_biogas_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.factor_util_turbina = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals, bounds=(0, 1))
+    m.factor_util_biogas = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals, bounds=(0, 1))
+    m.potencia_turbina_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.potencia_biogas_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.autoconsumo_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.excedente_permuta_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+    m.excedente_bolsa_kW = pyo.Var(m.PLANTAS, domain=pyo.NonNegativeReals)
+
+    m.r_una_turb = pyo.Constraint(m.PLANTAS, rule=lambda m, p: sum(m.z_turb[p, k] for k in m.TAM_TURBINA) == 1)
+    m.r_cap_turb = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.capacidad_turbina_kW[p] == sum(k*m.z_turb[p, k] for k in m.TAM_TURBINA))
+    m.r_cap_bio = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.capacidad_biogas_kW[p] == m.n_unidades_biogas[p] * TAMANO_UNIDAD_BIOGAS_KW)
+    m.r_pot_turb = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_turbina_kW[p] == m.factor_util_turbina[p]*m.potencia_ideal_turbina[p])
+    m.r_pot_bio = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_biogas_kW[p] == m.factor_util_biogas[p]*m.potencia_ideal_biogas[p])
+    m.r_no_exc_turb = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_turbina_kW[p] <= m.capacidad_turbina_kW[p])
+    m.r_no_exc_bio = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_biogas_kW[p] <= m.capacidad_biogas_kW[p])
+    m.r_reparto = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.potencia_turbina_kW[p] + m.potencia_biogas_kW[p]
+                                 == m.autoconsumo_kW[p] + m.excedente_permuta_kW[p] + m.excedente_bolsa_kW[p])
+    m.r_tope_auto = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.autoconsumo_kW[p] <= m.consumo_medido_kW[p])
+    m.r_tope_permuta = pyo.Constraint(m.PLANTAS, rule=lambda m, p: m.excedente_permuta_kW[p] <= m.consumo_medido_kW[p])
+
+    m.f1_economico = pyo.Expression(expr=(
+        sum(m.autoconsumo_kW[p]*m.horas[p]*m.precio_tramo12[p] for p in m.PLANTAS)
+        + sum(m.excedente_permuta_kW[p]*m.horas[p]*m.precio_tramo12[p] for p in m.PLANTAS)
+        + sum(m.excedente_bolsa_kW[p]*m.horas[p]*m.precio_bolsa for p in m.PLANTAS)
+        - sum(sum(CAPEX_TURBINA_ESC2[k]*m.z_turb[p, k] for k in m.TAM_TURBINA)/m.pvaf for p in m.PLANTAS)
+        - sum(m.n_unidades_biogas[p]*CAPEX_UNIDAD_BIOGAS/m.pvaf for p in m.PLANTAS)
+        - sum(sum(CAPEX_TURBINA_ESC2[k]*m.z_turb[p, k] for k in m.TAM_TURBINA)*PCT_OPERACION_ANUAL for p in m.PLANTAS)
+        - sum(m.n_unidades_biogas[p]*CAPEX_UNIDAD_BIOGAS*PCT_OPERACION_ANUAL for p in m.PLANTAS)
+        - sum(m.factor_util_turbina[p]*m.costo_oport[p] for p in m.PLANTAS)))
+
+    m.f2_generacion = pyo.Expression(expr=sum((m.potencia_turbina_kW[p] + m.potencia_biogas_kW[p])*m.horas[p] for p in m.PLANTAS))
+
+    if restriccion_f1 is not None:
+        m.r_eps_f1 = pyo.Constraint(expr=m.f1_economico >= restriccion_f1)
+    if restriccion_f2 is not None:
+        m.r_eps_f2 = pyo.Constraint(expr=m.f2_generacion >= restriccion_f2)
+
+    if objetivo == 'economico':
+        m.obj = pyo.Objective(expr=m.f1_economico, sense=pyo.maximize)
+    else:
+        m.obj = pyo.Objective(expr=m.f2_generacion, sense=pyo.maximize)
+    return m
+
+
+----- def costo_escalado -----
+def costo_escalado(costo_unitario_ref, capacidad_ref, capacidad_real):
+    """Costo TOTAL (USD 2026) de un equipo a `capacidad_real`.
+
+    costo_unitario_ref : $/unidad A LA CAPACIDAD DE REFERENCIA (Tabla 17)
+    capacidad_ref      : capacidad a la que aplica ese costo unitario
+    """
+    costo_total_ref = costo_unitario_ref * capacidad_ref
+    return costo_total_ref * factor_cepci_2019 * (capacidad_real / capacidad_ref) ** N_ESCALAMIENTO
+
+
+============================================================
+B) DESPLIEGUE 100% POR PLANTA (ultimo punto del frente)
+============================================================
+
+--- Esc.1: punto 10 ---
+ punto   planta  horas  cap_turbina_kW  cap_biogas_kW  generacion_kWh  autoconsumo_kWh  excedente_kWh
+    10 Planta A   5105          8000.0         2000.0    4.790039e+07     4.375667e+06   4.352473e+07
+    10 Planta B   5155          9000.0         4000.0    6.293240e+07     3.954977e+06   5.897743e+07
+    10 Planta C   5920          7000.0         3000.0    5.381025e+07     4.374570e+06   4.943568e+07
+    10 Planta D   5496          6000.0         3000.0    4.191548e+07     3.017460e+06   3.889802e+07
+    10 Planta E   3147          8000.0         3000.0    2.991806e+07     2.936363e+06   2.698170e+07
+    10 Planta F   1931          5000.0         2000.0    1.260045e+07     7.506106e+05   1.184984e+07
+
+--- Esc.2: punto 10 ---
+ punto   planta  horas  cap_turbina_kW  cap_biogas_kW  generacion_kWh  autoconsumo_kWh  excedente_kWh
+    10 Planta A   5105          1500.0         5000.0    2.953409e+07     3.835335e+06   2.569876e+07
+    10 Planta B   5155          1750.0         7000.0    4.136654e+07     3.261053e+06   3.810548e+07
+    10 Planta C   5920          1250.0         5000.0    3.524827e+07     3.823550e+06   3.142472e+07
+    10 Planta D   5496          1250.0         5000.0    2.810561e+07     2.622444e+06   2.548317e+07
+    10 Planta E   3147          1250.0         6000.0    1.948948e+07     2.623786e+06   1.686570e+07
+    10 Planta F   1931          1000.0         4000.0    7.875477e+06     6.264913e+05   7.248986e+06

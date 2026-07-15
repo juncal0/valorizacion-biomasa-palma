@@ -1375,3 +1375,43 @@ del autoconsumo.
 
 Archivos: `tarifa_preferencial_esc1.csv`, `tarifa_preferencial_esc2.csv`,
 `tarifa_preferencial_comparacion.png`.
+
+## 50. Análisis 1 — Rentabilidad desagregada por planta (Sección 23 del notebook)
+
+**Pregunta:** ¿"rentable sin subsidio" vale para las 6 plantas o solo para las grandes?
+
+**Método:** descomposición del beneficio neto del objetivo `f1_economico` planta por
+planta, en el punto de despliegue 100%. No es modelado nuevo: reutiliza la estructura
+del objetivo (tres tramos CREG 174: autoconsumo y permuta a minorista, resto a bolsa) y
+los diccionarios de CAPEX (regla 0.6) y fijo por planta ya definidos. En el 100% el
+factor de utilización de turbina es 1, así que el costo de oportunidad entra completo
+sin escalamiento.
+
+**Validación:** la suma de las 6 plantas reproduce el agregado al peso — Esc.1
+$1,964,312 y Esc.2 $6,334,963 (convención §19b). Chequeo cruzado independiente: el
+ranking de beneficio por planta coincide exactamente con el ranking de LCOE neto (§42.1)
+en ambos escenarios.
+
+**Resultado (beneficio neto USD/año al 100%):**
+
+| Planta | Esc.1 | Esc.2 |
+|---|---|---|
+| A | +56,424 | +700,056 |
+| B | +1,716,945 | +2,094,999 |
+| C | +1,868,776 | +2,260,949 |
+| D | +251,997 | +880,864 |
+| E | **−412,460** | +798,296 |
+| F | **−1,517,372** | **−400,202** |
+
+**Hallazgos:**
+1. La rentabilidad del sector la cargan las plantas grandes (B, C). E y F pierden dinero
+   individualmente en Esc.1; el agregado positivo es subsidio cruzado interno.
+2. La elección de tecnología tiene dimensión de EQUIDAD: el Esc.2 (biogás, CAPEX barato y
+   lineal) rescata a E y reduce a la mitad la pérdida de F. Es más rentable Y más equitativo.
+3. F no es rentable en ninguna ruta (pocas horas: 1,931/año). Es el caso duro irreducible
+   → justifica intervención pública FOCALIZADA, no general. Su única vía de viabilidad es
+   la escala (hub centralizado, Análisis 5), no la elección de tecnología.
+
+**Cautela:** el veredicto es sobre el despliegue 100%. En el óptimo económico privado
+(76% Esc.1) el reparto por planta puede diferir; pendiente el contraste óptimo-vs-100%
+leyendo `m.factor_utilizacion` del modelo resuelto.
