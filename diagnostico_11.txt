@@ -1,0 +1,29 @@
+============================================================
+A) Comparacion numerica: potencia_ideal_dict vs potencia_turbina_kW()
+============================================================
+Planta        ideal_dict         bruta    elec_bruta     elec_neta
+Planta A         7517.00       7517.00       6998.33       6004.56
+Planta B         8942.44       8942.44       8325.41       7143.20
+Planta C         6795.78       6795.78       6326.87       5428.45
+Planta D         5162.28       5162.28       4806.09       4123.62
+Planta E         7068.65       7068.65       6580.91       5646.42
+Planta F         4939.53       4939.53       4598.70       3945.68
+
+============================================================
+B) Comparacion numerica: potencia_ideal_biogas_esc1_dict vs biogas_pome()
+============================================================
+Planta        ideal_dict         bruta          neta
+Planta A         1866.04       1866.04       1759.50
+Planta B         3265.60       3265.60       3079.15
+Planta C         2293.79       2293.79       2162.84
+Planta D         2464.26       2464.26       2323.57
+Planta E         2438.20       2438.20       2299.00
+Planta F         1585.82       1585.82       1495.28
+
+============================================================
+C) Constantes de eficiencia
+============================================================
+eta_mecanica = 0.98
+eta_electrica = 0.95
+autoconsumo_pct = 0.142
+LHV_CH4_kWh_Nm3 = 9.94

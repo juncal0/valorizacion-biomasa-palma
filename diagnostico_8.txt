@@ -1,0 +1,36 @@
+============================================================
+A) Desglose completo por ETAPA (Planta A, filas Termica)
+============================================================
+                Etapa   Planta Tipo_energia    Valor_kW
+       Esterilización Planta A      Termica 4866.736111
+   Digestión prensado Planta A      Termica 2163.333333
+        Clarificación Planta A      Termica  535.000000
+          Palmistería Planta A      Termica 1233.680556
+       Almacenamiento Planta A      Termica 1156.527778
+Calentamiento de agua Planta A      Termica 1672.127907
+              Caldera Planta A      Termica  303.000000
+
+Suma total: 11930.41
+
+============================================================
+B) Buscar el literal 11627 o 11,627 en variables del entorno
+============================================================
+raw_efi = 11627.405684754522
+raw_sc1 = 11627.405684754522
+raw_sc1_biogas = 11627.405684754522
+raw_efi_horas = 11627.405684754522
+
+============================================================
+C) Funcion/fuente de demanda_termica_LB
+============================================================
+Tipo: <class 'pandas.core.series.Series'>
+Buscando la celda/funcion que la construye...
+
+----- resto_proceso_kg_h (referencia demanda_termica_LB) -----
+def resto_proceso_kg_h(planta):
+    return demanda_termica_LB[planta] * 3600 / delta_h_proceso
+
+
+----- resto_proceso_kg_h_esc2 (referencia demanda_termica_LB) -----
+def resto_proceso_kg_h_esc2(planta):
+    return demanda_termica_LB[planta] * 3600 / delta_h_proceso_esc2

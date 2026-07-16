@@ -149,11 +149,11 @@ def balance_emisiones_solo_energia_esc2(planta):
 ============================================================
 B) COLUMNAS DE df_pareto (frente agregado, Sec. 19/20)
 ============================================================
-Columnas: ['punto', 'epsilon_GWh', 'f1_beneficio_USD', 'f2_generacion_GWh', 'factor_util_promedio', 'factor_util_biogas_promedio', 'capacidad_turbina_total_MW', 'capacidad_biogas_total_MW', 'f1_beneficio_neto_total_USD']
-   punto  epsilon_GWh  f1_beneficio_USD  f2_generacion_GWh  factor_util_promedio  factor_util_biogas_promedio  capacidad_turbina_total_MW  capacidad_biogas_total_MW  f1_beneficio_neto_total_USD
-0      0   189.454778      8.202233e+06         189.454778              0.515419                          1.0                        23.9                       17.0                 4.866656e+06
-1      1   195.417004      8.179939e+06         215.285978              0.667160                          1.0                        28.6                       17.0                 4.844362e+06
-2      2   201.379230      8.179939e+06         215.285978              0.667160                          1.0                        28.6                       17.0                 4.844362e+06
+Columnas: ['punto', 'epsilon_GWh', 'f1_beneficio_USD', 'f2_generacion_GWh', 'factor_util_promedio', 'factor_util_biogas_promedio', 'capacidad_turbina_total_MW', 'capacidad_biogas_total_MW']
+   punto  epsilon_GWh  f1_beneficio_USD  f2_generacion_GWh  factor_util_promedio  factor_util_biogas_promedio  capacidad_turbina_total_MW  capacidad_biogas_total_MW
+0      0    66.963255      7.028979e+06          66.963255              0.046482                          1.0                         1.8                       17.0
+1      1    81.088600      6.842433e+06          97.681023              0.205791                          1.0                         8.5                       17.0
+2      2    95.213946      6.842433e+06          97.681023              0.205791                          1.0                         8.5                       17.0
 
 ============================================================
 C) CELDA QUE CONSTRUYE df_pareto (buscar generacion_GWh/emisiones)

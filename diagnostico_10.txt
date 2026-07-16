@@ -1,0 +1,52 @@
+============================================================
+A) Funciones de potencia de turbina (Esc.1 y Esc.2)
+============================================================
+
+----- potencia_turbina_kW -----
+def potencia_turbina_kW(planta):
+    r = balance_vapor_esc1(planta)
+    m_total_kg_s = r['produccion_kg_h'] / 3600
+    m_condensacion_kg_s = r['condensacion_kg_h'] / 3600
+
+    potencia_HP_kW = m_total_kg_s * (h0 - h1)          # hasta el punto de extracción, con toda la masa
+    potencia_LP_kW = m_condensacion_kg_s * (h1 - h2)   # solo la masa que sigue a condensación
+    potencia_bruta_kW = potencia_HP_kW + potencia_LP_kW
+
+    potencia_electrica_bruta_kW = potencia_bruta_kW * eta_mecanica * eta_electrica
+    potencia_electrica_neta_kW = potencia_electrica_bruta_kW * (1 - autoconsumo_pct)
+
+    return {'potencia_bruta_kW': potencia_bruta_kW,
+            'potencia_electrica_bruta_kW': potencia_electrica_bruta_kW,
+            'potencia_electrica_neta_kW': potencia_electrica_neta_kW}
+
+
+----- potencia_turbina_esc2_kW -----
+def potencia_turbina_esc2_kW(planta):
+    r = balance_vapor_esc2(planta)
+    m_turbina_kg_s = r['disponible_turbina_kg_h'] / 3600
+    potencia_bruta_kW = m_turbina_kg_s * (h0_esc2 - h_exhaust)
+    potencia_electrica_bruta_kW = potencia_bruta_kW * eta_mecanica * eta_electrica
+    potencia_electrica_neta_kW = potencia_electrica_bruta_kW * (1 - autoconsumo_pct)
+    return {'potencia_bruta_kW': potencia_bruta_kW, 'potencia_electrica_neta_kW': potencia_electrica_neta_kW}
+
+
+----- vapor_producido_kg_h -----
+def vapor_producido_kg_h(planta):
+    energia_kWth = vapor_util_kWth_esc1(planta)
+    return energia_kWth * 3600 / (h_vapor_caldera - h_agua_alim)
+
+
+----- vapor_producido_kg_h_esc2 -----
+def vapor_producido_kg_h_esc2(planta):
+    return vapor_util_kWth_esc2(planta) * 3600 / (h_vapor_caldera_esc2 - h_agua_alim_esc2)
+
+
+============================================================
+B) Eficiencia generador de biogas y otras constantes de conversion
+============================================================
+EFIC_GENERADOR_BIOGAS_BRUTA = 0.4
+EFICIENCIA_GENSET_DIESEL = 0.3
+beneficio_neto_optimo_economico_e1 = 4866655.765817956
+beneficio_neto_optimo_generacion_e1 = 2674252.911476598
+beneficio_esperado_19b = 4156714
+beneficio_max_pareto = 4866655.765817956

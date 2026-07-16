@@ -1,0 +1,25 @@
+============================================================
+A) df_demanda_por_etapa -- total termico por planta
+============================================================
+Columnas: ['Etapa', 'Planta', 'Tipo_energia', 'Valor_kW']
+Planta
+Planta A    11930.405685
+Planta B    15257.073643
+Planta C    12502.798773
+Planta D     9483.352041
+Planta E    10626.693669
+Planta F     7739.547158
+
+============================================================
+B) Busqueda directa de variables 'termic' o 'vapor' por planta
+============================================================
+
+----- demanda_termica_LB (Series) -----
+Planta
+Planta A    6528.669574
+Planta B    8243.045866
+Planta C    7505.868217
+Planta D    5279.862597
+Planta E    5674.968669
+Planta F    4326.491602
+Name: Valor_kW, dtype: float64
