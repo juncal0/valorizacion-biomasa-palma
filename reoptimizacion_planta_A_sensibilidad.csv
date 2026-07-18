@@ -1,0 +1,5 @@
+escenario_precio,precio_USD_kWh,cap_turbina_A_kW,cap_biogas_A_kW,generacion_A_kW,beneficio_total_reoptimizado_USD
+Cenipalma minimo,0.05792,300.0,2000.0,2166.0354048,2600151.2173232054
+Cenipalma promedio,0.10147,300.0,2000.0,2166.0354048,2872930.277384323
+Actual/UPME,0.11408,300.0,2000.0,2166.0354048,2983284.590742382
+Cenipalma maximo,0.18168,300.0,2000.0,2166.0354048,3574874.7242082646

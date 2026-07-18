@@ -1,0 +1,21 @@
+============================================================
+A) df_pareto_plantas ACTUAL, punto=0, las 6 plantas
+============================================================
+  planta  cap_turbina_kW  cap_biogas_kW  generacion_kWh  excedente_kWh
+Planta A           300.0         2000.0    1.020560e+07   5.829933e+06
+Planta B           300.0         4000.0    1.710838e+07   1.315340e+07
+Planta C           300.0         3000.0    1.422265e+07   9.848080e+06
+Planta D           300.0         3000.0    1.408740e+07   1.106994e+07
+Planta E           300.0         3000.0    7.989089e+06   5.052726e+06
+Planta F           300.0         2000.0    3.350137e+06   2.599527e+06
+
+Total generacion: 66.963255 GWh
+Total excedente:  47.553608 GWh
+CAPEX total: 49,122,339
+LCOE recalculado desde CERO (fresco): 0.1472
+
+============================================================
+B) Lo que df_sost tiene guardado para punto=0
+============================================================
+ punto  generacion_GWh  excedente_GWh  capex_total_MUSD  lcoe_USD_kWh
+     0       66.963255      47.553608         49.122339      0.104504

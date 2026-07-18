@@ -1,0 +1,70 @@
+digraph Energy_Valorization_Scenario2 {
+	fontname=Arial rankdir=TB size="12,12"
+	node [color="#777777" fillcolor="#f9f9f9" fontcolor="#000000" fontname="Arial-Bold" fontsize=10 shape=box style=filled width=2.2]
+	edge [color="#555555" fontname=Arial fontsize=9]
+	fontname="Arial-Bold" fontsize=13 label="CONCEPTUAL DIAGRAM FOR ENERGY VALORIZATION (SCENARIO 2): CO-DIGESTION & BACK-PRESSURE CYCLE" labelloc=t
+	mill [label="PALM OIL MILL" fillcolor="#dddddd" fontsize=12 shape=box]
+	fiber [label=FIBER color="#2a78d6" fillcolor="#e6f2ff"]
+	shell [label=SHELL color="#2a78d6" fillcolor="#e6f2ff"]
+	boiler [label="COMBUSTION
+BOILER"]
+	turbine [label="BACK-PRESSURE
+STEAM TURBINE" color="#008300" fillcolor="#008300" fontcolor=white]
+	header [label="STEAM DISTRIBUTION
+TANK / HEADER" color="#2a78d6" fillcolor="#dae8fc"]
+	process [label="INDUSTRIAL PROCESS
+(Thermal Demand)"]
+	condenser [label="CONDENSATION
+SYSTEM"]
+	makeup [label="MAKE-UP WATER
+TREATMENT"]
+	elec1 [label="ELECTRICITY
+GENERATION (BPT)" color="#008300" fillcolor="#008300" fontcolor=white]
+	pome [label="POME
+(Palm Oil Mill Effluent)" color="#008300" fillcolor="#e6f9e6"]
+	efb [label="EFB
+(Empty Fruit Bunches)" color="#008300" fillcolor="#e6f9e6"]
+	desand [label="DESANDING &
+OIL REMOVAL"]
+	stab [label="STABILIZATION POND"]
+	thermal [label="THERMAL
+PRETREATMENT" color="#d6b656" fillcolor="#fff2cc"]
+	digester [label="CO-DIGESTION
+ANAEROBIC DIGESTER" color="#008300" fillcolor="#008300" fontcolor=white]
+	clean [label="BIOGAS CLEANING
+SYSTEM"]
+	engine [label="BIOGAS ENGINE
+GENERATOR"]
+	elec2 [label="ELECTRICITY
+GENERATION (Biogas)" color="#008300" fillcolor="#008300" fontcolor=white]
+	fac_pond [label="FACULTATIVE POND"]
+	solids [label="SOLID
+REMOVAL"]
+	liquids [label="LIQUID DISCHARGE
+TO WATER BODIES"]
+	mill -> fiber
+	mill -> shell
+	mill -> efb
+	mill -> pome
+	fiber -> boiler [label=" Fuel Input"]
+	shell -> boiler [label=" Fuel Input"]
+	boiler -> turbine [label=" High-Pressure Steam" color="#2a78d6"]
+	turbine -> elec1
+	turbine -> header [label=" Exhaust Steam" color="#2a78d6"]
+	header -> process [label=" Process Steam" color="#2a78d6"]
+	header -> thermal [label=" Pretreatment Steam" color="#cc0000" style=dashed]
+	header -> condenser [label=" Remaining Steam" color="#2a78d6"]
+	condenser -> makeup [label=" Condensate Return" color="#2a78d6"]
+	makeup -> boiler [label=" Feedwater Input" color="#2a78d6"]
+	pome -> desand
+	desand -> stab
+	stab -> digester [label=" Liquid Stream"]
+	efb -> thermal
+	thermal -> digester [label=" Pretreated Solids"]
+	digester -> clean [label=" Biogas Production"]
+	clean -> engine
+	engine -> elec2
+	digester -> fac_pond [label=" Digestate"]
+	fac_pond -> solids [label=" Solids"]
+	fac_pond -> liquids [label=" Liquids"]
+}

@@ -1,0 +1,69 @@
+digraph Energy_Valorization_Diagram {
+	fontname=Arial rankdir=TB size="12,12"
+	node [color="#888888" fillcolor="#f4f4f4" fontcolor="#000000" fontname="Arial-Bold" fontsize=10 shape=box style=filled width=2]
+	edge [color="#555555" fontname=Arial fontsize=9]
+	mill [label="PALM OIL MILL
+(Baseline)" fillcolor="#dddddd" fontsize=12 shape=box]
+	efb [label="EFB
+(Empty Fruit Bunches)" color="#2a78d6" fillcolor="#2a78d6" fontcolor=white]
+	fiber [label=FIBER color="#2a78d6" fillcolor="#2a78d6" fontcolor=white]
+	shell [label=SHELL color="#2a78d6" fillcolor="#2a78d6" fontcolor=white]
+	pre [label="MECHANICAL
+PRETREATMENT"]
+	boiler [label="COMBUSTION
+BOILER"]
+	turbine [label="EXTRACTION-CONDENSATION
+STEAM TURBINE"]
+	process [label="INDUSTRIAL PROCESS
+(Thermal Demand)"]
+	condenser [label="CONDENSATION
+SYSTEM"]
+	makeup [label="MAKE-UP WATER
+TREATMENT"]
+	elec1 [label="ELECTRICITY
+GENERATION (SSC)" color="#2a78d6" fillcolor="#2a78d6" fontcolor=white]
+	pome [label="POME
+(Palm Oil Mill Effluent)" color="#008300" fillcolor="#008300" fontcolor=white]
+	desand [label="DESANDING &
+OIL REMOVAL"]
+	stab [label="STABILIZATION
+POND"]
+	digester [label="COVERED LAGOON
+ANAEROBIC DIGESTER"]
+	clean [label="BIOGAS CLEANING
+SYSTEM"]
+	engine [label="BIOGAS ENGINE
+GENERATOR"]
+	fac_pond [label="FACULTATIVE
+POND"]
+	solids [label="SOLID
+REMOVAL"]
+	liquids [label="LIQUID DISCHARGE
+TO WATER BODIES"]
+	elec2 [label="ELECTRICITY
+GENERATION (Biogas)" color="#008300" fillcolor="#008300" fontcolor=white]
+	mill -> efb
+	mill -> fiber
+	mill -> shell
+	mill -> pome
+	efb -> pre
+	pre -> boiler
+	fiber -> boiler
+	shell -> boiler
+	boiler -> turbine [label=" High-Pressure Steam"]
+	turbine -> elec1
+	turbine -> process [label=" Extracted Steam"]
+	turbine -> condenser [label=" Remaining Steam"]
+	condenser -> boiler [label=" Recovered Water"]
+	makeup -> boiler [label=" Make-up Water"]
+	process -> makeup [label=" Equiv. Volume" style=dashed]
+	pome -> desand
+	desand -> stab
+	stab -> digester
+	digester -> clean [label=" Biogas"]
+	clean -> engine
+	engine -> elec2
+	digester -> fac_pond [label=" Digestate"]
+	fac_pond -> solids
+	fac_pond -> liquids
+}

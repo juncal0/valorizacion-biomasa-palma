@@ -57,6 +57,25 @@ def porcentaje_cobertura_rural_departamental(excedente_electrico_kWh_ano):
 ----- DENSIDAD_CO2_kg_Nm3 (float) -----
 = 1.977
 
+----- intensidad_emisiones (function) -----
+def intensidad_emisiones(emisiones_kg_ano, energia_kWh_ano):
+    """Intensidad de emisiones en gCO2eq/kWh, a partir de emisiones anuales 
+    (kg CO2-eq/año) y energía exportada anual (kWh/año)."""
+    return emisiones_kg_ano * 1000 / energia_kWh_ano
+
+
+----- balance_emisiones_solo_energia_esc1 (function) -----
+def balance_emisiones_solo_energia_esc1(planta):
+    r = balance_emisiones_esc1(planta)
+    return r['emisiones_biomasa_kg'] + r['emisiones_biogas_kg'] + r['emisiones_diesel_kg'] + r['credito_exportacion_kg']
+
+
+----- balance_emisiones_solo_energia_esc2 (function) -----
+def balance_emisiones_solo_energia_esc2(planta):
+    r = balance_emisiones_esc2(planta)
+    return r['emisiones_biomasa_kg'] + r['emisiones_biogas_kg'] + r['emisiones_diesel_kg'] + r['credito_exportacion_kg']
+
+
 ----- balance_emisiones_esc1 (function) -----
 def balance_emisiones_esc1(planta):
     horas = horas_operacion_anual[planta]
@@ -118,42 +137,20 @@ def balance_emisiones_esc2(planta):
             'balance_neto_kgCO2eq_ano': balance_neto}
 
 
------ intensidad_emisiones (function) -----
-def intensidad_emisiones(emisiones_kg_ano, energia_kWh_ano):
-    """Intensidad de emisiones en gCO2eq/kWh, a partir de emisiones anuales 
-    (kg CO2-eq/año) y energía exportada anual (kWh/año)."""
-    return emisiones_kg_ano * 1000 / energia_kWh_ano
-
-
------ balance_emisiones_solo_energia_esc1 (function) -----
-def balance_emisiones_solo_energia_esc1(planta):
-    r = balance_emisiones_esc1(planta)
-    return r['emisiones_biomasa_kg'] + r['emisiones_biogas_kg'] + r['emisiones_diesel_kg'] + r['credito_exportacion_kg']
-
-
------ balance_emisiones_solo_energia_esc2 (function) -----
-def balance_emisiones_solo_energia_esc2(planta):
-    r = balance_emisiones_esc2(planta)
-    return r['emisiones_biomasa_kg'] + r['emisiones_biogas_kg'] + r['emisiones_diesel_kg'] + r['credito_exportacion_kg']
-
-
 ----- emisiones_energia (float64) -----
 = -873123.3034115118
 
------ d_co2 (float64) -----
-= 9742.277137322188
-
 ----- PRECIO_CARBONO_USD_tCO2 (float) -----
-= 7.48581438174659
+= 8.704651685056817
 
 ============================================================
 B) COLUMNAS DE df_pareto (frente agregado, Sec. 19/20)
 ============================================================
-Columnas: ['punto', 'epsilon_GWh', 'f1_beneficio_USD', 'f2_generacion_GWh', 'factor_util_promedio', 'factor_util_biogas_promedio', 'capacidad_turbina_total_MW', 'capacidad_biogas_total_MW']
-   punto  epsilon_GWh  f1_beneficio_USD  f2_generacion_GWh  factor_util_promedio  factor_util_biogas_promedio  capacidad_turbina_total_MW  capacidad_biogas_total_MW
-0      0    66.963255      7.028979e+06          66.963255              0.046482                          1.0                         1.8                       17.0
-1      1    81.088600      6.842433e+06          97.681023              0.205791                          1.0                         8.5                       17.0
-2      2    95.213946      6.842433e+06          97.681023              0.205791                          1.0                         8.5                       17.0
+Columnas: ['punto', 'epsilon_GWh', 'f1_beneficio_USD', 'f2_generacion_GWh', 'factor_util_promedio', 'factor_util_biogas_promedio', 'capacidad_turbina_total_MW', 'capacidad_biogas_total_MW', 'f1_beneficio_neto_total_USD']
+   punto  epsilon_GWh  f1_beneficio_USD  f2_generacion_GWh  factor_util_promedio  factor_util_biogas_promedio  capacidad_turbina_total_MW  capacidad_biogas_total_MW  f1_beneficio_neto_total_USD
+0      0    66.963255      7.028979e+06          66.963255              0.046482                          1.0                         1.8                       17.0                 3.693401e+06
+1      1    81.088600      6.842433e+06          97.681023              0.205791                          1.0                         8.5                       17.0                 3.506855e+06
+2      2    95.213946      6.842433e+06          97.681023              0.205791                          1.0                         8.5                       17.0                 3.506855e+06
 
 ============================================================
 C) CELDA QUE CONSTRUYE df_pareto (buscar generacion_GWh/emisiones)
@@ -170,7 +167,10 @@ def correr_frente(escenario, incentivo):
     CAPEX_TURBINA_ESC1  = {k: v * f for k, v in _ORIG['t1'].items()}
     CAPEX_TURBINA_ESC2  = {k: v * f for k, v in _ORIG['t2'].items()}
     CAPEX_UNIDAD_BIOGAS = _ORIG['bio'] * f
-    capex_fijo_anual = (_ORIG['fijo_e1'] if escenario == 1 else _ORIG['fijo_e2']) * f
+    if escenario == 1:
+        capex_fijo_anual = (_ORIG['fijo_e1'] + capex_fijo_total * PCT_OPERACION_ANUAL) * f
+    else:
+        capex_fijo_anual = (_ORIG['fijo_e2'] + capex_fijo_total_e2 * PCT_OPERACION_ANUAL) * f
 
     constructor = construir_modelo_f2 if escenario == 1 else construir_modelo_f2_esc2
     f2_ini = f2_en_f1max if escenario == 1 else f2_en_f1max_e2

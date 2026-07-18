@@ -1,0 +1,23 @@
+============================================================
+ESCENARIO 1 - Plantas A y D, puntos 0 y 10
+============================================================
+ punto   planta  cap_turbina_kW  cap_biogas_kW  generacion_kWh  autoconsumo_kWh  excedente_kWh  excedente_permuta_kWh  excedente_bolsa_kWh
+     0 Planta A           300.0         2000.0    1.020560e+07     4.375667e+06   5.829933e+06           4.375667e+06         1.454267e+06
+     0 Planta D           300.0         3000.0    1.408740e+07     3.017460e+06   1.106994e+07           3.017460e+06         8.052479e+06
+    10 Planta A          8000.0         2000.0    3.963554e+07     4.375667e+06   3.525987e+07           4.375667e+06         3.088421e+07
+    10 Planta D          6000.0         3000.0    3.543376e+07     3.017460e+06   3.241630e+07           3.017460e+06         2.939884e+07
+
+============================================================
+ESCENARIO 2 - Plantas A y D, puntos 0 y 10
+============================================================
+ punto   planta  cap_turbina_kW  cap_biogas_kW  generacion_kWh  autoconsumo_kWh  excedente_kWh  excedente_permuta_kWh  excedente_bolsa_kWh
+     0 Planta A           750.0         5000.0    2.445272e+07     3.835335e+06   2.061739e+07           3.835335e+06         1.678205e+07
+     0 Planta D           750.0         4000.0    2.402152e+07     2.622444e+06   2.139908e+07           2.622444e+06         1.877664e+07
+    10 Planta A          1500.0         5000.0    2.686158e+07     3.835335e+06   2.302624e+07           3.835335e+06         1.919091e+07
+    10 Planta D          1250.0         5000.0    2.565306e+07     2.622444e+06   2.303061e+07           2.622444e+06         2.040817e+07
+
+============================================================
+Confirmar precio actual usado para A y D en el modelo
+============================================================
+PRECIO_TRAMO_12_dict['Planta A'] = 0.1141
+PRECIO_TRAMO_12_dict['Planta D'] = 0.153

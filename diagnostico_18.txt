@@ -1,0 +1,23 @@
+============================================================
+ESCENARIO 1 - balance completo por planta (100%)
+============================================================
+Planta A: biomasa=1,211,682  biogas=4,458  diesel=116,725  credito=-5,761,463  neto=-25,109,973
+Planta B: biomasa=1,474,681  biogas=7,878  diesel=105,503  credito=-7,964,322  neto=-34,221,508
+Planta C: biomasa=1,307,013  biogas=6,355  diesel=116,696  credito=-6,628,460  neto=-29,181,499
+Planta D: biomasa=918,614  biogas=6,338  diesel=80,494  credito=-5,296,824  neto=-22,103,694
+Planta E: biomasa=701,201  biogas=3,591  diesel=78,330  credito=-3,605,891  neto=-15,571,895
+Planta F: biomasa=301,676  biogas=1,433  diesel=20,023  credito=-1,594,114  neto=-6,486,227
+
+TOTAL Esc.1: biomasa=5,914,867  biogas=30,054  diesel=517,772  credito=-30,851,074  neto=-132,674,796
+
+============================================================
+ESCENARIO 2 - balance completo por planta (100%)
+============================================================
+Planta A: biomasa=634,143  biogas=10,619  diesel=102,311  credito=-3,762,488  neto=-23,696,791
+Planta B: biomasa=754,686  biogas=15,559  diesel=86,992  credito=-5,649,282  neto=-32,637,294
+Planta C: biomasa=675,857  biogas=13,088  diesel=101,997  credito=-4,634,466  neto=-27,826,628
+Planta D: biomasa=537,873  biogas=10,400  diesel=69,956  credito=-3,763,202  neto=-20,957,289
+Planta E: biomasa=344,589  biogas=7,395  diesel=69,992  credito=-2,487,188  neto=-14,814,339
+Planta F: biomasa=173,717  biogas=2,798  diesel=16,712  credito=-1,066,351  neto=-6,088,368
+
+TOTAL Esc.2: biomasa=3,120,865  biogas=59,858  diesel=447,961  credito=-21,362,977  neto=-126,020,709

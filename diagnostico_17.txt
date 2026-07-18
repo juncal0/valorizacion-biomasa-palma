@@ -1,0 +1,46 @@
+============================================================
+A) energia_biomasa_kWth_esc1 -- de que depende (capacidad o fijo?)
+============================================================
+def energia_biomasa_kWth_esc1(planta):
+    e_cuesco = df_biomasa_disponible.loc[planta, 'Cuesco'] * lhv_kJ_kg['PKS'] / 3600
+    e_fibra  = df_biomasa_disponible.loc[planta, 'Fibra']  * lhv_kJ_kg['Fiber'] / 3600
+    r = pretratar_raquis(planta)
+    return e_cuesco + e_fibra + r['energia_kWth'], r['electricidad_kWh_h']
+
+
+============================================================
+B) excedente_total_esc1_kW -- a que punto del frente corresponde
+============================================================
+def excedente_total_esc1_kW(planta):
+    excedente_turbina, _ = excedente_electrico_esc1_kW(planta)   # Bloque 6
+    generacion_biogas_neta = biogas_pome(planta)['generacion_neta_kW']  # Bloque 7
+    return excedente_turbina + generacion_biogas_neta, excedente_turbina, generacion_biogas_neta
+
+
+============================================================
+C) consumo_electrico_esc1_kW
+============================================================
+def consumo_electrico_esc1_kW(planta):
+    resto = consumo_electrico_LB[planta]
+    esteriliz_continua = PARAM_ESTERILIZACION_CONTINUA['consumo_electricidad_kWh_tRFF'] * capacidades[planta]
+    clarif_dinamica    = PARAM_CLARIFICACION_DINAMICA['consumo_electricidad_kWh_tRFF'] * capacidades[planta]
+    _, elec_secador = energia_biomasa_kWth_esc1(planta)  # ya calculado en Bloque 1
+    return resto + esteriliz_continua + clarif_dinamica + elec_secador
+
+
+============================================================
+D) Tabla de factores de emision (GWP CH4/N2O)
+============================================================
+   Gas          Fuente  Factor_kg_TJ  GWP100_kgCO2eq_kg
+0  CH4  Biomasa sólida          30.0                 21
+1  CH4          Biogás           1.0                 21
+2  N2O  Biomasa sólida           4.0                310
+3  N2O          Biogás           0.1                310
+
+============================================================
+E) Constantes usadas (kWh_a_TJ, FRACCION_DIESEL_RESPALDO, etc)
+============================================================
+kWh_a_TJ = 3.5999999712e-06
+FRACCION_DIESEL_RESPALDO = 0.03
+EFICIENCIA_GENSET_DIESEL = 0.3
+FACTOR_RED_NACIONAL = 0.1634
