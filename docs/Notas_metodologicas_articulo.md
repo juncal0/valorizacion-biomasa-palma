@@ -1634,3 +1634,65 @@ el notebook junto a su definición para evitar uso accidental futuro.
 #1 (falsa alarma), #2 (bruta/exportada, confirmado sin impacto en emisiones/social),
 #4 (cobertura rural, validado externamente), más barrido_fit (corregido) y §43.3
 (costo cogeneración A, resuelto como sensibilidad).
+
+## 28 de julio de 2026 — Corrección de bugs de sensibilidad post-modularización
+
+Tras la extracción parcial del notebook a `modelo_biomasa/` (Secciones 1-7), una
+serie de chequeos automáticos (`checks = {...}`) detectó que los 4 resultados
+centrales del artículo ya no coincidían con los valores publicados. Se
+identificaron y corrigieron los siguientes problemas, todos preexistentes en
+el notebook (no introducidos por la modularización):
+
+**1. `consumo_medido_dict` desconectado de `df_ajuste`**
+El bloque de la Sección 6 (agregado el 6 de julio) calcula correctamente el
+ajuste termodinámico (IAPWS97) por sustitución tecnológica en esterilización/
+clarificación, pero ese resultado nunca se sumaba de vuelta a
+`consumo_medido_dict`, el diccionario que realmente usa el modelo. Corregido
+sumando `df_ajuste['delta_electrica_kW']` en la Sección 16.1.
+
+**2. Restauración de CAPEX no garantizada tras simulaciones de incentivo**
+`correr_frente()` (Sección 21) y la Tabla 8 reducen temporalmente
+`CAPEX_TURBINA_ESC1`, `CAPEX_TURBINA_ESC2` y `CAPEX_UNIDAD_BIOGAS` para
+simular incentivos tributarios (0-30%), pero la restauración al final podía
+no ejecutarse si había un error a mitad del barrido, o si `correr_frente()`
+se llamaba suelta fuera del barrido completo. Corregido envolviendo el cuerpo
+de `correr_frente()` (no solo quien la llama) en `try/finally`, con un
+`assert` que verifica el estado limpio inmediatamente después.
+
+**3. `_beneficio_planta_bolsa` / `beneficio_planta_en_punto` con un solo
+factor de utilización**
+Estas funciones de reconstrucción de beneficio neto no distinguían entre el
+factor de utilización de la turbina (`costo_oport`) y el del biogás
+(`costo_oport_raquis`). En Escenario 1 ambos coinciden (`factor_utilizacion`),
+pero en Escenario 2 son variables distintas (`factor_util_turbina` vs.
+`factor_util_biogas`). Corregido separando ambos parámetros explícitamente.
+Se encontraron y eliminaron 2 celdas duplicadas que llamaban a
+`beneficio_planta_en_punto(...)` con `None` en el argumento de raquis.
+
+**4. Variable global `plantas` pisada por una celda de figura**
+Una celda que genera `figura_horas_vs_capacidad.png` reutilizaba el nombre
+`plantas` para sus propias etiquetas cortas (`['A','B',...,'F']`),
+sobrescribiendo la variable global (`['Planta A', 'Planta B', ...]`) que usa
+el resto del notebook. Renombrada a `codigos` en esa celda.
+
+**5. Dos metodologías de LCOE compartiendo la variable `df_sost`**
+La Sección 16.6 calcula el LCOE sobre excedente exportado (coincide con la
+metodología documentada en la Sección 2.4 del manuscrito: "divided by the
+annual electricity exported rather than generated", y con el valor publicado
+de 0.1488 USD/kWh en el óptimo económico de Escenario 1). Una celda posterior,
+etiquetada "Sección 19.3", recalculaba `df_sost` con un "LCOE de sistema"
+sobre generación total (0.1045 USD/kWh) — una métrica que no se usa en
+ninguna parte del artículo. Esa celda quedaba corriendo después y sobrescribía
+el resultado correcto. Eliminada.
+
+**Lección para el resto del proyecto:** todos estos bugs comparten la misma
+causa raíz — variables globales compartidas entre celdas sin aislamiento de
+espacio de nombres (`plantas`, `filas`, `df_sost`, `CAPEX_TURBINA_ESC1`).
+Refuerza la decisión ya tomada de que la extracción a `esc1.py`/`esc2.py`
+debe encapsular estas funciones sin depender de mutación de estado global.
+
+**Verificado:** los 4 resultados centrales (m1, m2, m1_e2, m2_e2) y el LCOE
+del punto 0 de Escenario 1 (0.1488 USD/kWh) coinciden con el manuscrito
+publicado, tras `Restart + Run All Cells` completo del notebook.
+
+Ver commit `56c30ee` en el repositorio para el detalle completo del código.
