@@ -3,3 +3,5 @@ Escenarios.xlsx
 ~$*
 __pycache__/
 *.pyc
+docs/CONSOLIDADO*.xlsm
+*ZONA_NORTE*
